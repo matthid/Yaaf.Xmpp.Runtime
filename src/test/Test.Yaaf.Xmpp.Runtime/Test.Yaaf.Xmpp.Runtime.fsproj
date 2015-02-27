@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ddcbc02d-5d83-4556-9b7b-cefd2d382d13}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Test.Yaaf.Xmpp.Runtime</RootNamespace>
+    <AssemblyName>Test.Yaaf.Xmpp.Runtime</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFrameworkProfile />
+    <Name>Test.Yaaf.Xmpp.Runtime</Name>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget />
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="TestIXmlStream.fs" />
+    <Compile Include="TestStreamOpening.fs" />
+    <Compile Include="TestXmppRuntime.fs" />
+    <Compile Include="TestCoreRuntimeApi.fs" />
+    <Compile Include="TestBindFeature.fs" />
+    <Compile Include="TestPerUserService.fs" />
+    <Compile Include="TestAddressingPlugin.fs" />
+    <None Include="Script.fsx" />
+    <None Include="packages.config" />
+    <None Include="app.config" />
+    <Compile Include="TestHelper.fs" />
+    <Compile Include="JabberId.fs" />
+    <Compile Include="Stream.fs" />
+    <Compile Include="OpenHandshake.fs" />
+    <Compile Include="XmppClientHelper.fs" />
+    <Compile Include="BindParsingTests.fs" />
+    <Compile Include="XmppClient.fs" />
+    <Compile Include="ComponentNegotation.fs" />
+    <Compile Include="XmppServer.fs" />
+    <Compile Include="XmppServerComponent.fs" />
+    <Compile Include="SimpleTests.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Foq">
+      <HintPath>..\..\..\.nuget\packages\Foq.1.6\Lib\net45\Foq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharpx.Core">
+      <HintPath>..\..\..\.nuget\packages\FSharpx.Core.1.8.41\lib\40\FSharpx.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FsUnit.NUnit">
+      <HintPath>..\..\..\.nuget\packages\FsUnit.1.2.1.0\Lib\Net40\FsUnit.NUnit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\.nuget\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Unquote">
+      <HintPath>..\..\..\.nuget\packages\Unquote.2.2.2\lib\net40\Unquote.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yaaf.Logging">
+      <HintPath>..\..\..\lib\Yaaf.Logging\Yaaf.Logging.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\System.XML\Mono.System.Xml.csproj">
+      <Name>Mono.System.Xml</Name>
+      <Project>{4ed6cce8-8e8a-4d82-8bca-3ea4d4203aa4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Yaaf.Sasl\Yaaf.Sasl.fsproj">
+      <Name>Yaaf.Sasl</Name>
+      <Project>{acb4d3e9-0627-48c7-9790-10aa6926fb6f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Yaaf.Xml\Yaaf.Xml.fsproj">
+      <Name>Yaaf.Xml</Name>
+      <Project>{5190f827-1f15-4294-b0d8-b320d4045f48}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Yaaf.Xmpp.Runtime.Core\Yaaf.Xmpp.Runtime.Core.csproj">
+      <Name>Yaaf.Xmpp.Runtime.Core</Name>
+      <Project>{198f67b0-fb17-44bb-ad89-27192f75b5c5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Yaaf.Xmpp.Runtime\Yaaf.Xmpp.Runtime.fsproj">
+      <Name>Yaaf.Xmpp.Runtime</Name>
+      <Project>{db345059-d747-4e3c-8ea6-353eacffc141}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\test\Yaaf.TestHelper\Yaaf.TestHelper.fsproj">
+      <Name>Yaaf.TestHelper</Name>
+      <Project>{ddb71495-347d-4646-9d06-49cd2e6f2795}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Yaaf.RefactorOut\Test.Yaaf.RefactorOut.fsproj">
+      <Name>Test.Yaaf.RefactorOut</Name>
+      <Project>{d29e3415-77e0-41ba-b717-bd121283203c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Yaaf.Sasl\Test.Yaaf.Sasl.fsproj">
+      <Name>Test.Yaaf.Sasl</Name>
+      <Project>{6101b3fa-6650-4f0a-9b67-75c4a0cc323e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Yaaf.Xml\Test.Yaaf.Xml.fsproj">
+      <Name>Test.Yaaf.Xml</Name>
+      <Project>{cdc859f4-fa0d-4b66-8775-3c9db508fdf8}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Aktivieren Sie die Wiederherstellung von NuGet-Paketen, um die fehlende Datei herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{db345059-d747-4e3c-8ea6-353eacffc141}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Yaaf.Xmpp.Runtime</RootNamespace>
+    <AssemblyName>Yaaf.Xmpp.Runtime</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFrameworkProfile />
+    <Name>Yaaf.Xmpp.Runtime</Name>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <PlatformTarget />
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <PlatformTarget />
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.fs">
+      <Link>SolutionInfo.fs</Link>
+    </Compile>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="JabberId.fs" />
+    <Compile Include="StreamError.fs" />
+    <Compile Include="Stream.fs" />
+    <Compile Include="CoreExceptions.fs" />
+    <Compile Include="XmlStanzaParsing.fs" />
+    <Compile Include="Runtime\Interfaces.fs" />
+    <Compile Include="Runtime\InterfaceExtensions.fs" />
+    <Compile Include="Runtime\CoreStreamApi.fs" />
+    <Compile Include="Runtime\IOStreamBackend.fs" />
+    <Compile Include="Runtime\Runtime.fs" />
+    <Compile Include="Runtime\OpenHandshake.fs" />
+    <Compile Include="Runtime\Negotiation.fs" />
+    <Compile Include="Runtime\StreamFeatures\StreamFeaturePlugin.fs" />
+    <Compile Include="Runtime\StreamFeatures\FeatureTls.fs" />
+    <Compile Include="Runtime\StreamFeatures\FeatureSasl.fs" />
+    <Compile Include="Runtime\StreamFeatures\FeatureBind.fs" />
+    <Compile Include="Runtime\ComponentNegotiation.fs" />
+    <Compile Include="XmlStanzaPlugin.fs" />
+    <Compile Include="ClientServer\Resolve.fs" />
+    <Compile Include="ClientServer\ClientInterfaces.fs" />
+    <Compile Include="ClientServer\CryptographyHelper.fs" />
+    <Compile Include="ClientServer\ServerInterfaces.fs" />
+    <Compile Include="ClientServer\AddressingPlugin.fs" />
+    <Compile Include="ClientServer\UnknownIqResponderPlugin.fs" />
+    <Compile Include="ClientServer\XmppClient.fs" />
+    <Compile Include="ClientServer\Server\ConnectionManager.fs" />
+    <Compile Include="ClientServer\Server\StanzaDelivery.fs" />
+    <Compile Include="ClientServer\Server\ServerUserServicePlugin.fs" />
+    <Compile Include="ClientServer\Server\XmppServerDeliveryPlugin.fs" />
+    <Compile Include="ClientServer\Server\XmppServer.fs" />
+    <Compile Include="ClientServer\Server\XmppServerSetup.fs" />
+    <None Include="Script.fsx" />
+    <None Include="packages.config" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DnDns">
+      <HintPath>..\..\..\lib\DnDns v1.0.2.0 Binary\DnDns.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\..\..\packages\.nuget\FSharp.Core.3.1.2.1\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharpx.Collections">
+      <HintPath>..\..\..\packages\.nuget\FSharpx.Collections.1.10.1\lib\net40\FSharpx.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\packages\.nuget\Portable.Ninject.3.3.1\lib\net40-client\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Portable.Text.Encoding">
+      <HintPath>..\..\..\packages\.nuget\Yaaf.Portable.Text.Encoding.0.7.0.0\lib\portable-net45+sl5+netcore45+MonoAndroid1+MonoTouch1\Portable.Text.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Yaaf.DependencyInjection">
+      <HintPath>..\..\..\packages\.nuget\Yaaf.DependencyInjection.1.0.0\lib\net45\Yaaf.DependencyInjection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yaaf.DependencyInjection.Ninject">
+      <HintPath>..\..\..\packages\.nuget\Yaaf.DependencyInjection.Ninject.1.0.0\lib\net45\Yaaf.DependencyInjection.Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yaaf.FSharp.Helper">
+      <HintPath>..\..\..\packages\.nuget\Yaaf.FSharp.Helper.0.1.3\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\Yaaf.FSharp.Helper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yaaf.Logging">
+      <HintPath>..\..\..\.nuget\packages\Yaaf.Logging.2014.11.1\lib\net45\Yaaf.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Yaaf.Sasl">
+      <HintPath>..\..\..\packages\.nuget\Yaaf.Sasl.1.0.0\lib\net45\Yaaf.Sasl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\System.XML\Mono.System.Xml.csproj">
+      <Name>Mono.System.Xml</Name>
+      <Project>{4ed6cce8-8e8a-4d82-8bca-3ea4d4203aa4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Yaaf.Xml\Yaaf.Xml.fsproj">
+      <Name>Yaaf.Xml</Name>
+      <Project>{5190f827-1f15-4294-b0d8-b320d4045f48}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Yaaf.Xmpp.Runtime.Core\Yaaf.Xmpp.Runtime.Core.csproj">
+      <Name>Yaaf.Xmpp.Runtime.Core</Name>
+      <Project>{198f67b0-fb17-44bb-ad89-27192f75b5c5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Aktivieren Sie die Wiederherstellung von NuGet-Paketen, um die fehlende Datei herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

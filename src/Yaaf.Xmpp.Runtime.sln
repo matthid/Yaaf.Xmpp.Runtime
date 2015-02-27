@@ -1,0 +1,69 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{63297B98-5CED-492C-A5B7-A5B4F73CF142}"
+	ProjectSection(SolutionItems) = preProject
+		..\paket.dependencies = ..\paket.dependencies
+		..\paket.lock = ..\paket.lock
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
+	ProjectSection(SolutionItems) = preProject
+		..\buildConfig.fsx = ..\buildConfig.fsx
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD-2B06-4030-9F0F-DC548F98E1C4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Xmpp.Runtime", "test\Test.Yaaf.Xmpp.Runtime\Test.Yaaf.Xmpp.Runtime.fsproj", "{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xmpp.Runtime", "source\Yaaf.Xmpp.Runtime\Yaaf.Xmpp.Runtime.fsproj", "{DB345059-D747-4E3C-8EA6-353EACFFC141}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{1572AB1D-0D26-476E-AEE8-4D4D37CE8033}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\DevelopReadme.md = ..\doc\DevelopReadme.md
+		..\doc\ReleaseNotes.md = ..\doc\ReleaseNotes.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.System.Xml", "source\System.XML\Mono.System.Xml.csproj", "{4ED6CCE8-8E8A-4D82-8BCA-3EA4D4203AA4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xml", "source\Yaaf.Xml\Yaaf.Xml.fsproj", "{5190F827-1F15-4294-B0D8-B320D4045F48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaaf.Xmpp.Runtime.Core", "source\Yaaf.Xmpp.Runtime.Core\Yaaf.Xmpp.Runtime.Core.csproj", "{198F67B0-FB17-44BB-AD89-27192F75B5C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB345059-D747-4E3C-8EA6-353EACFFC141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB345059-D747-4E3C-8EA6-353EACFFC141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB345059-D747-4E3C-8EA6-353EACFFC141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB345059-D747-4E3C-8EA6-353EACFFC141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED6CCE8-8E8A-4D82-8BCA-3EA4D4203AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED6CCE8-8E8A-4D82-8BCA-3EA4D4203AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED6CCE8-8E8A-4D82-8BCA-3EA4D4203AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED6CCE8-8E8A-4D82-8BCA-3EA4D4203AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5190F827-1F15-4294-B0D8-B320D4045F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5190F827-1F15-4294-B0D8-B320D4045F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5190F827-1F15-4294-B0D8-B320D4045F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5190F827-1F15-4294-B0D8-B320D4045F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+	EndGlobalSection
+EndGlobal
