@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 namespace Yaaf.TestHelper
 
-open FSharp.Control
+open Yaaf.FSharp.Control
 open System.Threading.Tasks
 open System
 open FsUnit

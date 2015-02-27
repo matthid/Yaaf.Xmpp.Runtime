@@ -4,10 +4,20 @@ nuget FAKE
 nuget FSharp.Formatting
 nuget FSharp.Compiler.Service
 nuget Nuget.CommandLine
-nuget NUnit
+// Until Visual Studio test runner supports later versions.
+nuget NUnit == 2.6.3
 nuget NUnit.Runners
 nuget FSharp.Compiler.Service
 nuget Unquote
+nuget Foq
+nuget FSharp.Core
+nuget Yaaf.Sasl
+nuget Yaaf.DependencyInjection
+nuget Yaaf.DependencyInjection.Ninject
 nuget Yaaf.FSharp.Scripting
+nuget Yaaf.FSharp.Helper
 nuget Microsoft.AspNet.Razor == 2.0.30506.0
 nuget RazorEngine
+
+github matthid/Yaaf.FSharp.Helper src/test/Test.Yaaf.FSharp.Helper/MyTestClass.fs
+github matthid/Yaaf.FSharp.Helper src/test/Test.Yaaf.FSharp.Helper/StreamTestClass.fs

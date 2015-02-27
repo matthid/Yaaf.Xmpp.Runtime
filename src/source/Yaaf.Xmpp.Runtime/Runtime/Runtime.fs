@@ -91,7 +91,15 @@ type SingleChecker() =
 
 /// Represents the part of the runtime which doesn't depend on the 'prim type
 type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKernel) as x =
-
+    static do
+        WorkerThread.CallContext <- 
+            { new ICallContext with
+                member x.LogicalGetData key =
+                    System.Runtime.Remoting.Messaging.CallContext.LogicalGetData key
+                member x.LogicalSetData (key, value) =
+                    System.Runtime.Remoting.Messaging.CallContext.LogicalSetData(key, value) 
+            }
+    
     let childKernel = kernel.CreateChild()
     let xmlPipelineManager = 
         //childKernel.Get<IRuntimePluginManager>() 

@@ -16,6 +16,15 @@ type MyXmlTestClass() =
     let mutable xmlReader1 = Unchecked.defaultof<_>
     let mutable xmlWriter1 = Unchecked.defaultof<_>
     let mutable worker = None
+    static do
+        WorkerThread.CallContext <- 
+            { new ICallContext with
+                member x.LogicalGetData key =
+                    System.Runtime.Remoting.Messaging.CallContext.LogicalGetData key
+                member x.LogicalSetData (key, value) =
+                    System.Runtime.Remoting.Messaging.CallContext.LogicalSetData(key, value) 
+            }
+
     override this.Setup() = 
         base.Setup()
         worker <- Some (new WorkerThread())

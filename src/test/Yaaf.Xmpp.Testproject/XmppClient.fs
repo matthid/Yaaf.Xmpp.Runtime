@@ -12,6 +12,7 @@ open System.IO
 open System.Xml
 open System.Xml.Linq
 open FSharp.Control
+#if Disabled
 open Yaaf.Sasl
 open Yaaf.Xml
 open Yaaf.Helper
@@ -152,3 +153,4 @@ let main args =
     with exn -> 
         printfn "Client faulted: %O" exn
         -10
+#endif

@@ -33,6 +33,14 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xml", "source\Yaaf.Xml
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaaf.Xmpp.Runtime.Core", "source\Yaaf.Xmpp.Runtime.Core\Yaaf.Xmpp.Runtime.Core.csproj", "{198F67B0-FB17-44BB-AD89-27192F75B5C5}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Xml", "test\Test.Yaaf.Xml\Test.Yaaf.Xml.fsproj", "{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Xmpp", "test\Test.Yaaf.Xmpp\Test.Yaaf.Xmpp.fsproj", "{82BF7596-8A7F-4555-8CE9-6CA66E8A585B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.TestHelper", "test\Yaaf.TestHelper\Yaaf.TestHelper.fsproj", "{DDB71495-347D-4646-9D06-49CD2E6F2795}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xmpp.Testproject", "test\Yaaf.Xmpp.Testproject\Yaaf.Xmpp.Testproject.fsproj", "{D4659895-36D0-4BDB-B315-58AC36F53616}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,11 +67,31 @@ Global
 		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198F67B0-FB17-44BB-AD89-27192F75B5C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB71495-347D-4646-9D06-49CD2E6F2795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB71495-347D-4646-9D06-49CD2E6F2795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB71495-347D-4646-9D06-49CD2E6F2795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB71495-347D-4646-9D06-49CD2E6F2795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4659895-36D0-4BDB-B315-58AC36F53616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4659895-36D0-4BDB-B315-58AC36F53616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4659895-36D0-4BDB-B315-58AC36F53616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4659895-36D0-4BDB-B315-58AC36F53616}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DDCBC02D-5D83-4556-9B7B-CEFD2D382D13} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{CDC859F4-FA0D-4B66-8775-3C9DB508FDF8} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{DDB71495-347D-4646-9D06-49CD2E6F2795} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{D4659895-36D0-4BDB-B315-58AC36F53616} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 	EndGlobalSection
 EndGlobal

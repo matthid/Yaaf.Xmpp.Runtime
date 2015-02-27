@@ -171,7 +171,9 @@ type LazyMonoXmlTextReader(s : Stream, settings : Mono.System.Xml.XmlReaderSetti
             let reader = monoReader |> Lazy.force
             //do! Async.SwitchToContext context
             // Because there is currently no real async api, we should be in the worker thread now.
-            do! WorkerThread.SwitchToLogicalWorker()
+            if not <| obj.ReferenceEquals(WorkerThread.CallContext, null) then
+                do! WorkerThread.SwitchToLogicalWorker()
+
             let read = f reader
             return read }
     member x.MyRead () = myAsyncHelper (fun r -> r.Read())
