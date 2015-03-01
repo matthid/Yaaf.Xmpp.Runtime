@@ -12,6 +12,12 @@
     The secound step is executing build.fsx which loads this file (for configuration), builds the solution and executes all unit tests.
 *)
 
+#if FAKE
+#else
+// Support when file is opened in Visual Studio
+#load "packages/Yaaf.AdvancedBuilding/content/buildConfigDef.fsx"
+#endif
+
 open BuildConfigDef
 open System.Collections.Generic
 open System.IO
@@ -28,22 +34,26 @@ let buildConfig =
  // Read release notes document
  let release = ReleaseNotesHelper.parseReleaseNotes (File.ReadLines "doc/ReleaseNotes.md")
  { BuildConfiguration.Defaults with
-    ProjectName = "Yaaf.FSharp.Scripting"
-    CopyrightNotice = "Yaaf.FSharp.Scripting Copyright © Matthias Dittrich 2015"
-    ProjectSummary = "A helper library to easily add F# scripts to your application."
-    ProjectDescription = "This library builds on top of the FSharp.Compiler.Service library and provides a nice API for F# script integration. It provides APIs to push values into and to get values from scripts. Additionally it adds some extension methods missing from the FSharp.Compiler.Service API."
+    ProjectName = "Yaaf.Xmpp.Runtime"
+    CopyrightNotice = "Yaaf.Xmpp.Runtime Copyright © Matthias Dittrich 2015"
+    ProjectSummary = "A full rfc xmpp library."
+    ProjectDescription = "A base runtime for any application using XMPP as communication layer."
     ProjectAuthors = ["Matthias Dittrich"]
-    NugetTags =  "fsharp scripting compiler host"
+    NugetTags =  "fsharp csharp xmpp library"
     PageAuthor = "Matthias Dittrich"
     GithubUser = "matthid"
     Version = release.NugetVersion
     NugetPackages =
-      [ "Yaaf.FSharp.Scripting.nuspec", (fun config p ->
+      [ "Yaaf.Xmpp.Runtime.nuspec", (fun config p ->
           { p with
               Version = config.Version
               ReleaseNotes = toLines release.Notes
               Dependencies = 
-                [ "FSharp.Compiler.Service", "0.0.82" ] }) ]
+                [ "Yaaf.FSharp.Helper", "0.1.3"
+                  "Yaaf.DependencyInjection", "1.0.0"
+                  "Yaaf.DependencyInjection.Ninject", "1.0.0"
+                  "FSharp.Core", "3.1.2.1"
+                  "Yaaf.Sasl", "1.0.0" ] }) ]
     UseNuget = false
     SetAssemblyFileVersions = (fun config ->
       let info =
@@ -54,14 +64,35 @@ let buildConfig =
           Attribute.FileVersion config.Version
           Attribute.InformationalVersion config.Version]
       CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.fs" info)
-    EnableProjectFileCreation = true
+    EnableProjectFileCreation = false
+    GeneratedFileList =
+        [ "DnDns.dll"
+          "Mono.System.Xml.dll"
+          "Yaaf.Xml.dll"; "Yaaf.Xml.xml"
+          "Yaaf.Xmpp.Runtime.Core.dll"; "Yaaf.Xmpp.Runtime.Core.xml"
+          "Yaaf.Xmpp.Runtime.dll"; "Yaaf.Xmpp.Runtime.xml"; "Yaaf.Xmpp.Runtime.config" ]
     BuildTargets =
      [ { BuildParams.Empty with
           // The default build
-          CustomBuildName = ""
-          SimpleBuildName = "net40" }
-       { BuildParams.Empty with
-          // The generated templates
-          CustomBuildName = "net45"
-          SimpleBuildName = "net45" } ]
+          PlatformName = ""
+          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
+          AfterBuild = fun _ -> File.Delete "build/net45/FSharp.Core.dll"
+          FindProjectFiles = 
+            (fun buildParam ->
+                !! "src/source/**/*.csproj"
+                ++ "src/source/**/*.fsproj"
+                -- "src/**/System.XML/**/*.csproj"
+                :> _)
+          SimpleBuildName = "net45" }
+       //{ BuildParams.Empty with
+       //   // The generated templates
+       //   CustomBuildName = "net45"
+       //   FindProjectFiles = 
+       //     (fun buildParam ->
+       //         !! "src/source/**/*.csproj"
+       //         ++ "src/source/**/*.fsproj"
+       //         -- "src/**/System.XML/**/*.csproj"
+       //         :> _)
+       //   SimpleBuildName = "net45" } 
+       ]
   }

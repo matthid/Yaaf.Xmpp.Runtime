@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60
 		..\buildConfig.fsx = ..\buildConfig.fsx
 		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
 		..\README.md = ..\README.md
+		..\nuget\Yaaf.Xmpp.Runtime.nuspec = ..\nuget\Yaaf.Xmpp.Runtime.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD-2B06-4030-9F0F-DC548F98E1C4}"
