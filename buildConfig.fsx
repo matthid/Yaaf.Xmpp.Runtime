@@ -72,27 +72,20 @@ let buildConfig =
           "Yaaf.Xmpp.Runtime.Core.dll"; "Yaaf.Xmpp.Runtime.Core.xml"
           "Yaaf.Xmpp.Runtime.dll"; "Yaaf.Xmpp.Runtime.xml"; "Yaaf.Xmpp.Runtime.config" ]
     BuildTargets =
-     [ { BuildParams.Empty with
+     [ { BuildParams.WithSolution with
           // The default build
-          PlatformName = ""
+          PlatformName = "Net45"
           // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
           AfterBuild = fun _ -> File.Delete "build/net45/FSharp.Core.dll"
-          FindProjectFiles = 
-            (fun buildParam ->
-                !! "src/source/**/*.csproj"
-                ++ "src/source/**/*.fsproj"
-                -- "src/**/System.XML/**/*.csproj"
-                :> _)
           SimpleBuildName = "net45" }
-       //{ BuildParams.Empty with
-       //   // The generated templates
-       //   CustomBuildName = "net45"
-       //   FindProjectFiles = 
-       //     (fun buildParam ->
-       //         !! "src/source/**/*.csproj"
-       //         ++ "src/source/**/*.fsproj"
-       //         -- "src/**/System.XML/**/*.csproj"
-       //         :> _)
-       //   SimpleBuildName = "net45" } 
+       (*{ BuildParams.WithSolution with
+          // The default build
+          PlatformName = "Profile111"
+          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
+          AfterBuild = fun _ -> File.Delete "build/profile111/FSharp.Core.dll"
+          SimpleBuildName = "profile111"
+          FindUnitTestDlls =
+            // Don't run on mono.
+            if isMono then (fun _ -> Seq.empty) else BuildParams.Empty.FindUnitTestDlls }*)
        ]
   }
