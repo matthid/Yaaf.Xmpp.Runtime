@@ -2,7 +2,7 @@ Yaaf.FSharp.Helper
 FSharp.Core
 Yaaf.Sasl
 Yaaf.DependencyInjection
-Yaaf.DependencyInjection.Ninject
+Yaaf.DependencyInjection.SimpleInjector
 Unquote
 Foq
 FsUnit

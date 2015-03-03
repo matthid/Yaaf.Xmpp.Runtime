@@ -160,7 +160,7 @@ module XmppServerSetup =
             Routing = None
             Connections = None
             Delivery = None
-            Kernel = NinjectKernelCreator.CreateKernel()
+            Kernel = SimpleInjectorKernelCreator.CreateKernel()
             ClientConfig = None
             RegisterServerPlugins = ignore
         }
@@ -221,7 +221,7 @@ module XmppServerSetup =
                     oldSetup)
         { setup with 
             ClientConfig = Some <| combineConfigurators setup.ClientConfig addHelper }
-    let registerServerPlugin<'a when 'a :> IServerPlugin> setup =
+    let registerServerPlugin<'a when 'a :> IServerPlugin and 'a : not struct> setup =
         { setup with 
             RegisterServerPlugins = 
                 (fun mgr ->

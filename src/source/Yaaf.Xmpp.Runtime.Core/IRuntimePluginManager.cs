@@ -69,13 +69,13 @@ namespace Yaaf.Xmpp.Runtime
 	/// <summary>
 	/// Most of the Plugins will require a plugin manager (ie to use API provided by other plugins
 	/// </summary>
-	public interface IServicePluginManager<TPlugin> : IPluginManager<TPlugin> where TPlugin : IPluginServiceProvider {
+	public interface IServicePluginManager<TPlugin> : IPluginManager<TPlugin> where TPlugin : class, IPluginServiceProvider {
 		/// <summary>
 		/// Registers a plugin, 't must be the concrete plugin type
 		/// If your plugin has custom initialisation parameters just setup the Ninject kernel before calling this method.
 		/// NOTE: all Runtime specific services are already setup! (like ILocalDelivery or ICoreRuntimeApi for example, note also that you even can get the IKernel instance!)
 		/// </summary>
-		void RegisterPlugin<T> () where T : TPlugin;
+		void RegisterPlugin<T> () where T : class, TPlugin;
 
 
 		///// <summary>
@@ -91,7 +91,7 @@ namespace Yaaf.Xmpp.Runtime
         /// </summary>
         /// <typeparam name="U"></typeparam>
         /// <returns></returns>
-		U GetPluginService<U> ();
+		U GetPluginService<U> () where U : class;
 	}
     /// <summary>
     /// Extension methods for the Plugin Manager interfaces.

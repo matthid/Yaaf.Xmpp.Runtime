@@ -33,7 +33,7 @@ type ``Test-Yaaf-Xmpp-XmppClient: Check if XmppClient handles the Runtime proper
     let config = RuntimeConfig.Default
 
     let createRuntime coreApi =
-        new XmppRuntime(coreApi, config, NinjectKernelCreator.CreateKernel())
+        new XmppRuntime(coreApi, config, SimpleInjectorKernelCreator.CreateKernel())
 
     let createClient coreApi =
         let task = new System.Threading.Tasks.TaskCompletionSource<_>()

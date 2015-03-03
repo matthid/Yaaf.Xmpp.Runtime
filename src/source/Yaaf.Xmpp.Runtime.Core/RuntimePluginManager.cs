@@ -115,7 +115,7 @@ namespace Yaaf.Xmpp.Runtime {
     /// A generic implementation of the IServicePluginManager interface.
     /// </summary>
     /// <typeparam name="P"></typeparam>
-	public class ServicePluginManager<P> : PluginManager<P>, IServicePluginManager<P> where P : IPluginServiceProvider {
+	public class ServicePluginManager<P> : PluginManager<P>, IServicePluginManager<P> where P : class, IPluginServiceProvider {
 		IKernel kernel;
 		private Func<string, Exception, Exception> createPluginException;
         /// <summary>
@@ -144,7 +144,7 @@ namespace Yaaf.Xmpp.Runtime {
         /// We simply query the kernel for the instance.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-		public void RegisterPlugin<T> () where T : P
+		public void RegisterPlugin<T> () where T : class, P
 		{
 			try {
 				var pluginInstance = kernel.Get<T> ();
@@ -159,7 +159,7 @@ namespace Yaaf.Xmpp.Runtime {
         /// </summary>
         /// <typeparam name="U"></typeparam>
         /// <returns></returns>
-		public U GetPluginService<U> ()
+		public U GetPluginService<U> () where U : class
 		{
 			try {
 				return kernel.Get<U> ();

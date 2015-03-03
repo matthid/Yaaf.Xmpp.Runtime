@@ -125,7 +125,7 @@ type IServerApi =
     abstract ConnectedComponents : ConnectedComponent list with get
     abstract Domain : string with get
     abstract TcpListeners : System.Net.Sockets.TcpListener list with get
-    abstract GetGlobalService<'a> : unit -> 'a
+    abstract GetGlobalService<'a when 'a : not struct> : unit -> 'a
 
 
 [<AutoOpen>]

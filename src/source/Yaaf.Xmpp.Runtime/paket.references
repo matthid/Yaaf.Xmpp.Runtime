@@ -1,5 +1,5 @@
 Yaaf.FSharp.Helper
 Yaaf.Sasl
 Yaaf.DependencyInjection
-Yaaf.DependencyInjection.Ninject
+Yaaf.DependencyInjection.SimpleInjector
 FSharp.Core

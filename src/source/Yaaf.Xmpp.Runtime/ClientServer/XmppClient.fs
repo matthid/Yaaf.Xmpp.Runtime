@@ -43,7 +43,7 @@ open Yaaf.DependencyInjection
 type internal XmppClientSetup private (kernel : IKernel, init : XmppRuntime -> unit) =
     let kernel = kernel.CreateChild()
     let mutable initRuntime = init
-    static member internal Create () = XmppClientSetup(NinjectKernelCreator.CreateKernel(), ignore)
+    static member internal Create () = XmppClientSetup(SimpleInjectorKernelCreator.CreateKernel(), ignore)
     static member internal Create (kernel : IKernel) = XmppClientSetup(kernel, ignore)
     static member internal Create (kernel : IKernel, init) = XmppClientSetup(kernel, init)
 
@@ -99,7 +99,7 @@ module XmppSetup =
     let addHelper updateKernel addInitRuntime setup = AddHelper(setup, updateKernel, addInitRuntime)
 
     /// Helper method to set standard configs
-    let inline SetConfig< ^C, ^I when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) > (setup, config : ^I) =
+    let inline SetConfig< ^C, ^I when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) and ^I : not struct > (setup, config : ^I) =
         let updateKernel kernel =
             Kernel.overrideConfig< ^I, ^C > kernel (fun (_: ^C) -> config)
                 |> ignore
@@ -285,7 +285,7 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
         member x.NegotiationTask = x.NegotiationTask
         member x.ConnectTask = x.ConnectTask
         member x.Exited = x.Exited
-        member x.GetService<'a> () = runtime.PluginManager.GetPluginService<'a>()
+        member x.GetService<'a when 'a : not struct> () = runtime.PluginManager.GetPluginService<'a>()
         
     static member RawConnect (setup : ClientSetup) =
         let setup = setup.Setup

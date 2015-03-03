@@ -227,20 +227,20 @@ type IRuntimeConfig with
     static member Default = RuntimeConfig.Default :> IRuntimeConfig
 
 type IKernel with
-    member x.HasNot<'a>() =
+    member x.HasNot<'a when 'a : not struct>() =
         x.TryGet<'a>().IsNone
         
-    member x.GetWithDefault<'a, 'b> (f)  (def  : 'b) =
+    member x.GetWithDefault<'a, 'b when 'a : not struct> (f)  (def  : 'b) =
         match x.TryGet<'a>() with
         | Some s -> f s
         | None -> def
 module Kernel =
-    let inline getConfig< ^I, ^C when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) > (kernel:IKernel) =
+    let inline getConfig< ^I, ^C when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) and ^I : not struct> (kernel:IKernel) =
         let ofInterface i = (^C : (static member OfInterface : ^I -> ^C) i)
         let def = (^C : (static member get_Default : unit -> ^C) ())
         kernel.GetWithDefault ofInterface def
         
-    let inline overrideConfig< ^I, ^C when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) > (kernel:IKernel) overwrite =
+    let inline overrideConfig< ^I, ^C when ^C : (static member get_Default: unit-> ^C) and  ^C : (static member OfInterface: ^I -> ^C) and ^I : not struct> (kernel:IKernel) overwrite =
         let overwritten = overwrite (getConfig< ^I, ^C > kernel)
         kernel.Rebind< ^I >().ToConstant(overwritten) |> ignore
         overwritten

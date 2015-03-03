@@ -120,7 +120,7 @@ type XmppServer(c : ServerSetup) as this =
         member x.TcpListeners = []
         member x.ConnectionManager with get () = x.ConnectionManager
         member x.Domain with get () = x.Domain
-        member x.GetGlobalService<'a> () = kernel.Get<'a>()
+        member x.GetGlobalService<'a when 'a : not struct> () = kernel.Get<'a>()
 
     member x.ClientConnected (*createClient:_ -> IXmppClient*) streamType stream = 
         async { 
