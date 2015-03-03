@@ -3,8 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 // ----------------------------------------------------------------------------
 namespace Test.Yaaf.Xmpp
-open FSharp.Control
-open FSharpx.Async
+open Yaaf.FSharp.Control
 open Yaaf.Xmpp
 open Yaaf.Helper
 open Yaaf.Logging

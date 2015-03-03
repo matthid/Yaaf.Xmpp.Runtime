@@ -10,7 +10,7 @@ open Yaaf.Xml
 open System.Xml.Linq
 open NUnit.Framework
 open FsUnit
-open FSharp.Control
+open Yaaf.FSharp.Control
 
 open Yaaf.Sasl
 

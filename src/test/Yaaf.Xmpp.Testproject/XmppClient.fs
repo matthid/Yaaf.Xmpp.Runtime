@@ -11,7 +11,7 @@ open System
 open System.IO
 open System.Xml
 open System.Xml.Linq
-open FSharp.Control
+open Yaaf.FSharp.Control
 #if Disabled
 open Yaaf.Sasl
 open Yaaf.Xml

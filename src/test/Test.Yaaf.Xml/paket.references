@@ -2,4 +2,5 @@ Yaaf.FSharp.Helper
 FSharp.Core
 Unquote
 Foq
+FsUnit
 NUnit

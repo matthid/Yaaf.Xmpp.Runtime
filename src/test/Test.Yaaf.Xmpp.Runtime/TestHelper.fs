@@ -6,7 +6,7 @@
 module Test.Yaaf.Xmpp.TestHelper
 open System.IO
 open Mono.System.Xml
-open FSharp.Control
+open Yaaf.FSharp.Control
 
 open NUnit.Framework
 open FsUnit

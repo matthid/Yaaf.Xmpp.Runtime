@@ -176,7 +176,16 @@ let buildAllDocumentation outDocDir website_root =
 
     // Build API reference from XML comments
     let referenceBinaries =
-        config.GeneratedFileList |> List.filter (fun f -> f.EndsWith(".dll") || f.EndsWith(".exe"))
+        let xmlFiles = config.GeneratedFileList |> List.filter (fun f -> f.EndsWith(".xml"))
+        config.GeneratedFileList
+          |> List.filter (fun f -> f.EndsWith(".dll") || f.EndsWith(".exe"))
+          |> List.filter (fun f ->
+              let exists =
+                xmlFiles |> List.exists (fun xml ->
+                    Path.GetFileNameWithoutExtension xml = Path.GetFileNameWithoutExtension f)
+              if not exists then
+                  trace (sprintf "No .xml file is given in GeneratedFileList for %s" f)
+              exists)
 
     let buildReference () =
         let referenceDir = outDocDir @@ "html"
@@ -191,7 +200,7 @@ let buildAllDocumentation outDocDir website_root =
            (binaries, Path.GetFullPath outDir, config.LayoutRoots,
             parameters = projInfo,
             libDirs = [ Path.GetFullPath (libDir) ],
-            otherFlags = [ "-r:System";"-r:System.Core";"-r:System.Xml";"-r:System.Xml.Linq"],
+            otherFlags = [ "-r:System";"-r:System.Core";"-r:System.Xml";"-r:System.Xml.Linq" ],
             sourceRepo = config.SourceReproUrl,
             sourceFolder = "./",
             publicOnly = true, 

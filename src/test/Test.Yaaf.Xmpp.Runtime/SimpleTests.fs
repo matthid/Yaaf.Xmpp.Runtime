@@ -10,7 +10,7 @@ open Mono.System.Xml
 open System.Xml.Linq
 open NUnit.Framework
 open FsUnit
-open FSharp.Control
+open Yaaf.FSharp.Control
 open Test.Yaaf.Xmpp.TestHelper
 open Yaaf.Xmpp
 open Yaaf.Xml
