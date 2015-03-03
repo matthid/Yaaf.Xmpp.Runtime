@@ -1,12 +1,13 @@
 ﻿namespace System
 open System.Reflection
 
-[<assembly: AssemblyCompanyAttribute("Yaaf")>]
-[<assembly: AssemblyProductAttribute("Yaaf.Xmpp")>]
-[<assembly: AssemblyCopyrightAttribute("Matthias Dittrich � 2014")>]
-[<assembly: AssemblyVersionAttribute("2014.04.02.00")>]
-[<assembly: AssemblyFileVersionAttribute("2014.04.02.00")>]
+[<assembly: AssemblyCompanyAttribute("Yaaf.Xmpp.Runtime")>]
+[<assembly: AssemblyProductAttribute("Yaaf.Xmpp.Runtime")>]
+[<assembly: AssemblyCopyrightAttribute("Yaaf.Xmpp.Runtime Copyright © Matthias Dittrich 2015")>]
+[<assembly: AssemblyVersionAttribute("0.0.1")>]
+[<assembly: AssemblyFileVersionAttribute("0.0.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("0.0.1")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "2014.04.02.00"
+    let [<Literal>] Version = "0.0.1"
