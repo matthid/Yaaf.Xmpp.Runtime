@@ -1,4 +1,4 @@
-﻿# Yaaf.AdvancedBuilding implementation documentation 
+﻿# Yaaf.Xmpp.Runtime implementation documentation 
 
 ## Building
 
@@ -7,7 +7,7 @@ This project uses Yaaf.AdvancedBuilding, see https://matthid.github.io/Yaaf.Adva
 ## General overview:
 
 This project is a full XMPP.core implementation strictly following the RFC specification.
-It provides a lot of extensions to implement any kind of XEP.
+It provides a lot of extension points to implement any kind of XEP.
 
 ### Issues / Features / TODOs
 
