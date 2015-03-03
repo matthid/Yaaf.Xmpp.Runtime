@@ -30,7 +30,7 @@ type SimpleHelperMethodTests() =
     inherit MyTestClass()
 
     [<Test>]
-    member this.``Check that guardAsync works`` () = 
+    member this.``Check that guardAsync works`` () =
         (fun () ->
             guardAsync
                 (fun () -> async {
@@ -39,9 +39,9 @@ type SimpleHelperMethodTests() =
                         do! Async.Sleep 10
                     }) |> Async.RunSynchronously)
             |> should throw typeof<System.Exception>
-            
+
     [<Test>]
-    member this.``Check that guardAsync doesn't guards XmlException`` () = 
+    member this.``Check that guardAsync doesn't guards XmlException`` () =
         (fun () ->
             guardAsync
                 (fun () -> async {
@@ -51,7 +51,7 @@ type SimpleHelperMethodTests() =
                     }) |> Async.RunSynchronously)
             |> should throw typeof<System.Xml.XmlException>
     [<Test>]
-    member this.``Check that guardAsync guards Yaaf.Xmpp.XmlException`` () = 
+    member this.``Check that guardAsync guards Yaaf.Xmpp.XmlException`` () =
         (fun () ->
             guardAsync
                 (fun () -> async {

@@ -160,57 +160,10 @@ type ``Stream Elements``() =
 
         writer ("<<> >")
         raises<XmlException> <@ readXElementOrClose reader |> Async.StartAsTaskImmediate |> waitTask @>
-            
-    
+
+
 open Yaaf.Xmpp.XmlStanzas
 open Yaaf.Xmpp.XmlStanzas.Parsing
-    
-[<TestFixture>]
-type XmlStanzaParsingTestClass() = 
-    inherit MyTestClass()
-    let getElem stanzaString = 
-        let reader, writer, d = initTestRaw ()
-        
-        let readTask = readOpenXElement reader |> Async.StartAsTask
-        
-        writer ("<?xml version='1.0'?><stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams'>")
-        let openInfo = readTask |> waitTask
-
-        let readTask = readXElementOrClose reader |> Async.StartAsTask
-        
-        writer (stanzaString)
-        let elem = readTask |> waitTask
-        elem.IsSome |> should be True
-        elem.Value
-
-    let test stanzaString = 
-        let elem = getElem stanzaString
-        let stanza = parseStanzaElementNoError "jabber:client" elem
-        if stanza.Header.Type.IsSome && stanza.Header.Type.Value = "error" then
-            (fun () -> parseStanzaElement "jabber:client" elem |> ignore)
-                |> should throw typeof<ReceivedStanzaException>
-
-        let elem2 = createStanzaElement "jabber:client" stanza
-        let result = equalXNodeAdvanced elem2 elem
-        if not result.IsEqual then
-            Assert.Fail (result.Message)
-        stanza
-    let validateShouldThrow stanza =
-        (fun () -> validateStanza stanza |> ignore) |> should throw typeof<StanzaValidationException>
-        
-    let genericTest (contentGen:ContentGenerator<'a>) stanzaString (stanza:Stanza<'a>) = 
-        let origElem = getElem stanzaString
-        let newElem = createStanzaElement "jabber:client" stanza
-        let result = equalXNodeAdvanced newElem origElem
-        if not result.IsEqual then
-            Assert.Fail (result.Message)
-
-    member x.Test stanzaString = 
-        test stanzaString
-    member x.GenericTest contentGen stanzaString stanza = 
-        genericTest contentGen stanzaString stanza
-    member x.ValidateShouldThrow stanza = 
-        validateShouldThrow stanza
 
 [<TestFixture>]
 type ``Stream change Streamnamespace Tests``() = 
