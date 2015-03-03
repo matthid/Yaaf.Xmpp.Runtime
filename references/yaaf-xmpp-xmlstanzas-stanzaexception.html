@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>StanzaException - Yaaf.Xmpp.Runtime</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Matthias Dittrich">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/style.css" />
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.css" />
+    <script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/tips.js"></script>
+	<script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://tpetricek.github.io/FSharp.Formatting/"><img height="16" width="16" src="http://fsharp.org/images/thumbs/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Yaaf.Xmpp.Runtime</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>StanzaException </h1>
+<div class="xmldoc">
+    Defined in Yaaf.Xmpp.Runtime.dll.
+</div>
+<div class="xmldoc">
+
+ Used when we want to return a stanza error
+</br></div>
+  <h3>Record Fields</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Record Field</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '943', 943)" onmouseover="showTip(event, '943', 943)">
+            errorStanza
+          </code>
+          <div class="tip" id="943">
+            <strong>Signature:</strong> StanzaError<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L470-470" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '944', 944)" onmouseover="showTip(event, '944', 944)">
+            new(info, context)
+          </code>
+          <div class="tip" id="944">
+            <strong>Signature:</strong> (info:SerializationInfo * context:StreamingContext) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L475-475" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '945', 945)" onmouseover="showTip(event, '945', 945)">
+            new(msg, inner)
+          </code>
+          <div class="tip" id="945">
+            <strong>Signature:</strong> (msg:StanzaError * inner:Exception) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L474-474" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '946', 946)" onmouseover="showTip(event, '946', 946)">
+            new(msg, txt, inner)
+          </code>
+          <div class="tip" id="946">
+            <strong>Signature:</strong> (msg:StanzaError * txt:string * inner:exn) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L473-473" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '947', 947)" onmouseover="showTip(event, '947', 947)">
+            new(msg, txt)
+          </code>
+          <div class="tip" id="947">
+            <strong>Signature:</strong> (msg:StanzaError * txt:string) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L472-472" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '948', 948)" onmouseover="showTip(event, '948', 948)">
+            new(msg)
+          </code>
+          <div class="tip" id="948">
+            <strong>Signature:</strong> msg:StanzaError -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L471-471" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '949', 949)" onmouseover="showTip(event, '949', 949)">
+            ErrorStanza
+          </code>
+          <div class="tip" id="949">
+            <strong>Signature:</strong> StanzaError<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L480-480" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '950', 950)" onmouseover="showTip(event, '950', 950)">
+            Create(...)
+          </code>
+          <div class="tip" id="950">
+            <strong>Signature:</strong> (errorType:StanzaErrorType * errorCondition:StanzaErrorConditon * rawElem:IStanza) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L539-539" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '951', 951)" onmouseover="showTip(event, '951', 951)">
+            Create(...)
+          </code>
+          <div class="tip" id="951">
+            <strong>Signature:</strong> (errorType:StanzaErrorType * errorCondition:StanzaErrorConditon * header:StanzaHeader) -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L537-537" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '952', 952)" onmouseover="showTip(event, '952', 952)">
+            Create(error)
+          </code>
+          <div class="tip" id="952">
+            <strong>Signature:</strong> error:StanzaError -&gt; StanzaException<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L536-536" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '953', 953)" onmouseover="showTip(event, '953', 953)">
+            CreateBadRequest(header)
+          </code>
+          <div class="tip" id="953">
+            <strong>Signature:</strong> header:StanzaHeader -&gt; Stanza&lt;StanzaErrorData&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L533-533" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '954', 954)" onmouseover="showTip(event, '954', 954)">
+            Raise(...)
+          </code>
+          <div class="tip" id="954">
+            <strong>Signature:</strong> (errorType:StanzaErrorType * errorCondition:StanzaErrorConditon * rawElem:IStanza) -&gt; &#39;?6774<br />
+                          <strong>Type parameters:</strong> '?6774          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L544-544" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '955', 955)" onmouseover="showTip(event, '955', 955)">
+            Raise(errorType, errorCondition, header)
+          </code>
+          <div class="tip" id="955">
+            <strong>Signature:</strong> (errorType:StanzaErrorType * errorCondition:StanzaErrorConditon * header:StanzaHeader) -&gt; &#39;?6772<br />
+                          <strong>Type parameters:</strong> '?6772          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L543-543" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '956', 956)" onmouseover="showTip(event, '956', 956)">
+            Raise(error)
+          </code>
+          <div class="tip" id="956">
+            <strong>Signature:</strong> error:StanzaError -&gt; &#39;?6770<br />
+                          <strong>Type parameters:</strong> '?6770          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L542-542" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">
+            <img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">Yaaf.Xmpp.Runtime</li>
+
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/Yaaf.Xmpp.Runtime/">Get Yaaf.Xmpp.Runtime package via NuGet</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime">Source Code</a></li>
+            <li><a href="https://github.com/matthid//issues">Open bugs and feature requests</a></li>
+            <li><a href="https://github.com/matthid//issues/new">Report Issue or Request Feature</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime/blob/develop/LICENSE.md">License (Apache 2)</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/Contributing.html">Contributing</a></li>
+            
+            <li class="nav-header">Documentation</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Quick Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/ReleaseNotes.html">Release Notes</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/DevelopReadme.html">Development Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/buildConfig.html">An example build configuration</a></li>
+
+            <li class="nav-header">Reference</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/references/index.html">API Reference</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+      <a href="https://github.com/matthid/Yaaf.Xmpp.Runtime"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    </body>
+  </html>

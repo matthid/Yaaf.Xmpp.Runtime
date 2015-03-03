@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Yaaf.Xmpp.Runtime
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A full rfc xmpp library.">
+    <meta name="author" content="Matthias Dittrich">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/style.css" />
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.css" />
+    <script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/tips.js"></script>
+	<script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://tpetricek.github.io/FSharp.Formatting/"><img height="16" width="16" src="http://fsharp.org/images/thumbs/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Yaaf.Xmpp.Runtime</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<!-- GENERATED FROM COMMIT: e153715b7cf7593303b479bbcd9e16c895742a44 -->
+<h1><a name="Yaaf-Xmpp-Runtime" class="anchor" href="#Yaaf-Xmpp-Runtime">Yaaf.Xmpp.Runtime</a></h1>
+
+<h2><a name="Documentation" class="anchor" href="#Documentation"><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/">Documentation</a></a></h2>
+
+<h2><a name="Build-status" class="anchor" href="#Build-status">Build status</a></h2>
+
+<p><strong>Development Branch</strong></p>
+
+<p><a href="https://travis-ci.org/matthid/Yaaf.Xmpp.Runtime"><img src="https://travis-ci.org/matthid/Yaaf.Xmpp.Runtime.svg?branch=develop" alt="Build Status" /></a>
+<a href="https://ci.appveyor.com/project/matthid/yaaf-xmpp-runtime/branch/develop"><img src="https://ci.appveyor.com/api/projects/status/3apdx33exbabe19p/branch/develop?svg=true" alt="Build status" /></a></p>
+
+<p><strong>Master Branch</strong></p>
+
+<p><a href="https://travis-ci.org/matthid/Yaaf.Xmpp.Runtime"><img src="https://travis-ci.org/matthid/Yaaf.Xmpp.Runtime.svg?branch=master" alt="Build Status" /></a>
+<a href="https://ci.appveyor.com/project/matthid/yaaf-xmpp-runtime/branch/master"><img src="https://ci.appveyor.com/api/projects/status/3apdx33exbabe19p/branch/master?svg=true" alt="Build status" /></a></p>
+
+<h2><a name="NuGet" class="anchor" href="#NuGet">NuGet</a></h2>
+
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      The Yaaf.Xmpp.Runtime library can be <a href="https://nuget.org/packages/Yaaf.Xmpp.Runtime">installed from NuGet</a>:
+      <pre>PM> Install-Package Yaaf.Xmpp.Runtime</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
+
+<h2><a name="Why-another-XMPP-library-implementation" class="anchor" href="#Why-another-XMPP-library-implementation">Why another XMPP library/implementation?</a></h2>
+
+<ul>
+<li>For fun.</li>
+<li>More flexible, than most other implementations.</li>
+<li>Can be used to implement a server as well as clients. 
+Historically XMPP has the problem that features are often implemented on the server or the client only and therefore unusable.
+This library encourages to write both implementations at the same time.</li>
+<li>Asynchronous from the core by design (NOTE: currently we are limited by System.XML not being completely asynchronous.
+Because we currently use a mono port, but now with <a href="https://github.com/dotnet/corefx">https://github.com/dotnet/corefx</a> we may be able to use that instead.)</li>
+<li>While called "Xmpp.Runtime" this library is flexible enough to build any kind of XML based communication on top of any kind of transportation layer.</li>
+</ul>
+
+
+        </div>
+        <div class="span3">
+          <a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">
+            <img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">Yaaf.Xmpp.Runtime</li>
+
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/Yaaf.Xmpp.Runtime/">Get Yaaf.Xmpp.Runtime package via NuGet</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime">Source Code</a></li>
+            <li><a href="https://github.com/matthid//issues">Open bugs and feature requests</a></li>
+            <li><a href="https://github.com/matthid//issues/new">Report Issue or Request Feature</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime/blob/develop/LICENSE.md">License (Apache 2)</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/Contributing.html">Contributing</a></li>
+            
+            <li class="nav-header">Documentation</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Quick Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/ReleaseNotes.html">Release Notes</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/DevelopReadme.html">Development Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/buildConfig.html">An example build configuration</a></li>
+
+            <li class="nav-header">Reference</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/references/index.html">API Reference</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+      <a href="https://github.com/matthid/Yaaf.Xmpp.Runtime"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    </body>
+  </html>

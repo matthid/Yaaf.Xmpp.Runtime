@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Namespaces - Yaaf.Xmpp.Runtime</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Matthias Dittrich">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/style.css" />
+    <link type="text/css" rel="stylesheet" href="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.css" />
+    <script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/tips.js"></script>
+	<script type="text/javascript" src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/prism.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://tpetricek.github.io/FSharp.Formatting/"><img height="16" width="16" src="http://fsharp.org/images/thumbs/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Yaaf.Xmpp.Runtime</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+<h1>Yaaf.Xmpp.Runtime</h1>
+
+<h2><a name="Overview" class="anchor" href="#Overview">Overview</a></h2>
+    <a href="#Yaaf.Xml">Yaaf.Xml</a><br />
+    <a href="#Yaaf.Xmpp">Yaaf.Xmpp</a><br />
+    <a href="#Yaaf.Xmpp.Runtime">Yaaf.Xmpp.Runtime</a><br />
+    <a href="#Yaaf.Xmpp.Runtime.Features">Yaaf.Xmpp.Runtime.Features</a><br />
+    <a href="#Yaaf.Xmpp.Server">Yaaf.Xmpp.Server</a><br />
+    <a href="#Yaaf.Xmpp.XmlStanzas">Yaaf.Xmpp.XmlStanzas</a><br />
+
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xml" class="anchor" href="#Yaaf.Xml">Yaaf.Xml Namespace</a></h2>
+    <div>
+        <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xml-assemblyinfo.html">AssemblyInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xml-asyncxmlreader.html">AsyncXmlReader</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xml-core.html">Core</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xmpp" class="anchor" href="#Yaaf.Xmpp">Yaaf.Xmpp Namespace</a></h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-iservicemanager.html">IServiceManager</a>
+          </td>
+          <td class="xmldoc">
+            Defines a manager of services, it allows the registration of additional services
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-servicemanager.html">ServiceManager</a>
+          </td>
+          <td class="xmldoc">
+            This class provides an abstract implementation of the IServiceManager interface by delegating the
+            generic RegisterService call to a concrete RegisterService method with actuall Type parameters.
+            This works around some F# limitations with the IServiceManager interface (ie you can't override the generic RegisterService method directly).
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-addressingplugin.html">AddressingPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-advancedconnectinfo.html">AdvancedConnectInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-clientsetup.html">ClientSetup</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-connectinfo.html">ConnectInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-iaddressingservice.html">IAddressingService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-iostreammanager.html">IOStreamManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-irawstanzaplugin.html">IRawStanzaPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-irawunvalidatedstanzaplugin.html">IRawUnvalidatedStanzaPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-ixmlstanzaservice.html">IXmlStanzaService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-ixmppclient.html">IXmppClient</a>
+          </td>
+          <td class="xmldoc">
+ Simple interface representing an xmpp connection
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-jabberid.html">JabberId</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-openelement.html">OpenElement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-streamelement.html">StreamElement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-streamtype.html">StreamType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-task-1.html">Task<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-unknowniqresponderplugin.html">UnknownIqResponderPlugin</a>
+          </td>
+          <td class="xmldoc">
+ Plugin which handles unknown iq stanzas
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzaplugin.html">XmlStanzaPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmppclient.html">XmppClient</a>
+          </td>
+          <td class="xmldoc">
+ Represents a more abstract xmpp connection. 
+ Wrapps an XmppRuntime and provides an easy interface to register plugins and start a connection
+</br></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-addressingserviceextensions.html">AddressingServiceExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-cryptographyhelpers.html">CryptographyHelpers</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-iostreamhelpers.html">IOStreamHelpers</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-knownstreamnamespaces.html">KnownStreamNamespaces</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-resolve.html">Resolve</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-stanzaserviceextensions.html">StanzaServiceExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-stream.html">Stream</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-streamdata.html">StreamData</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-streamhelpers.html">StreamHelpers</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmppsetup.html">XmppSetup</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xmpp.Runtime" class="anchor" href="#Yaaf.Xmpp.Runtime">Yaaf.Xmpp.Runtime Namespace</a></h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ipluginmanager-1.html">IPluginManager<'TPlugin></a>
+          </td>
+          <td class="xmldoc">
+            A plugin manager interface for registering and querying plugins.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ipluginserviceprovider.html">IPluginServiceProvider</a>
+          </td>
+          <td class="xmldoc">
+            Interface for plugins to provide some services
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iservice.html">IService</a>
+          </td>
+          <td class="xmldoc">
+            Describes an service provided by a plugin.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iservicepluginmanager-1.html">IServicePluginManager<'TPlugin></a>
+          </td>
+          <td class="xmldoc">
+            Most of the Plugins will require a plugin manager (ie to use API provided by other plugins
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-pluginmanager-1.html">PluginManager<'P></a>
+          </td>
+          <td class="xmldoc">
+            Implementation of the IPluginManager interface
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-pluginmanagerexception.html">PluginManagerException</a>
+          </td>
+          <td class="xmldoc">
+            Exception when plugins fail, cannot be created or added.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-runtimepluginmanagerextensions.html">RuntimePluginManagerExtensions</a>
+          </td>
+          <td class="xmldoc">
+            Extension methods for the Plugin Manager interfaces.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-service.html">Service</a>
+          </td>
+          <td class="xmldoc">
+            Provides some simple (extension-) methods for the IService interface.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-servicepluginmanager-1.html">ServicePluginManager<'P></a>
+          </td>
+          <td class="xmldoc">
+            A generic implementation of the IServicePluginManager interface.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-servicepluginmanager.html">ServicePluginManager</a>
+          </td>
+          <td class="xmldoc">
+            Helper methods for the generic ServicePluginManager class.
+            </br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-componentconfig.html">ComponentConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-componentnegotiationplugin.html">ComponentNegotiationPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-componentsconfig.html">ComponentsConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-configurationexception.html">ConfigurationException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-corestreamapi.html">CoreStreamApi</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-handlerstate.html">HandlerState</a>
+          </td>
+          <td class="xmldoc">
+ Represents the current state of the handler for a given item
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-icomponentsconfig.html">IComponentsConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-icorestreamapi.html">ICoreStreamApi</a>
+          </td>
+          <td class="xmldoc">
+ Allows plugins to change the underlaying stream. So this interface abstracts away changing IXmlStream objects.
+ Plugins will require an ICoreStreamApi in there contructors if they need this API.
+ NOTE: BE CAREFUL WITH THIS API, THE METHODS OF THIS API CAN ONLY BE USED FROM WITHIN PLUGIN CALLS.
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iexclusivesend.html">IExclusiveSend</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iinternalstreamopener.html">IInternalStreamOpener</a>
+          </td>
+          <td class="xmldoc">
+ Used by the CoreApi to open the stream
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ilocaldelivery.html">ILocalDelivery</a>
+          </td>
+          <td class="xmldoc">
+ Some Plugins will require a ILocalDelivery to send raw messages back to the other end.
+ The server/client code will also use this API to send messages over the wire.
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-inegotiationservice.html">INegotiationService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ipipeline-1.html">IPipeline<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ipipelineprovider-1.html">IPipelineProvider<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iplugin.html">IPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ipluginmanagerregistrar.html">IPluginManagerRegistrar</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ireceivepipelineprovider-1.html">IReceivePipelineProvider<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iruntimeconfig.html">IRuntimeConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-iruntimeshutdown.html">IRuntimeShutdown</a>
+          </td>
+          <td class="xmldoc">
+ Provides an api for plugins to do work on runtime exit
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-isendpipelineprovider-1.html">ISendPipelineProvider<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-istreammanager-1.html">IStreamManager<'prim></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-istreammanager.html">IStreamManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmlpipelineplugin.html">IXmlPipelinePlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmlpluginmanager.html">IXmlPluginManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmlstream.html">IXmlStream</a>
+          </td>
+          <td class="xmldoc">
+ This will only be used by the runtime. However to be extendible custom implementations are allowed.
+ Implementations SHOULD NOT throw their own exceptions on reading. 
+ Allowed are only:
+  - StreamFinishedException and subclasses when the other side finished the stream.
+  - StreamErrorException when there is an error in reading the stream (to close the stream properly). NOTE that you do NOT throw this exception when you read a stream error (use StreamFailException in this case).
+ ON write custom exceptions are allowed, but note that because of the queuing system we always shut down the runtime when the write fails!
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmppplugin.html">IXmppPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmpppluginconfig.html">IXmppPluginConfig</a>
+          </td>
+          <td class="xmldoc">
+ The Configuration of an Plugin. Every implementation of this interface MUST be immutable!
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-ixmpppluginmanager.html">IXmppPluginManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-pipelineresult-1.html">PipelineResult<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-pluginmanagerregistrar.html">PluginManagerRegistrar</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-preprocessresult-1.html">PreprocessResult<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-processinfo-1.html">ProcessInfo<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-sendqueuebox.html">SendQueueBox</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-sendstreamclosedexception.html">SendStreamClosedException</a>
+          </td>
+          <td class="xmldoc">
+ This error indicates that the sending pipeline was already closed, so sending is not longer possible (IE the closing element </stream> was already sent!)
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-singlechecker.html">SingleChecker</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streamerrorexception.html">StreamErrorException</a>
+          </td>
+          <td class="xmldoc">
+ This class represents errors within the xmpp-stream.
+ When thrown it is a request to the runtime to send the stream error and close the runtime. (can also be used be plugins)
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streamfailexception.html">StreamFailException</a>
+          </td>
+          <td class="xmldoc">
+ This class represents errors where the other side already closed the stream with an error
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streamfinishedexception.html">StreamFinishedException</a>
+          </td>
+          <td class="xmldoc">
+ This class represents any kind of finish from the other side
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streammanager-1.html">StreamManager<'prim></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streamnormalfinishedexception.html">StreamNormalFinishedException</a>
+          </td>
+          <td class="xmldoc">
+ This class represents a normal stream close from the other side (can be used by plugins to trigger a immediate regular stream shutdown)
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-streamunexpectedfinishexception.html">StreamUnexpectedFinishException</a>
+          </td>
+          <td class="xmldoc">
+ This class represents a normal stream close from the other side, but on an unexpected situation
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-xmlstreamerror.html">XmlStreamError</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-xmppruntime.html">XmppRuntime</a>
+          </td>
+          <td class="xmldoc">
+ Represents the part of the runtime which doesn't depend on the 'prim type
+</br></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-componenthandshake.html">ComponentHandshake</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-configuration.html">Configuration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-interfaceextensions.html">InterfaceExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-openhandshake.html">OpenHandshake</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-parsing.html">Parsing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-streamerror.html">StreamError</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xmpp.Runtime.Features" class="anchor" href="#Yaaf.Xmpp.Runtime.Features">Yaaf.Xmpp.Runtime.Features Namespace</a></h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-bindconfig.html">BindConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-bindelement.html">BindElement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-bindfeature.html">BindFeature</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-featureinfo.html">FeatureInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-featureplugin.html">FeaturePlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-featureselector.html">FeatureSelector</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-ibindconfig.html">IBindConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-ibindservice.html">IBindService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-iresourcemanager.html">IResourceManager</a>
+          </td>
+          <td class="xmldoc">
+ This interface is required to check if the requested resource is already connected,
+ and to disconnect other resources if required
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-isaslconfig.html">ISaslConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-isaslservice.html">ISaslService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-istreamfeatureconfig.html">IStreamFeatureConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-istreamfeaturehandler.html">IStreamFeatureHandler</a>
+          </td>
+          <td class="xmldoc">
+ Note that the context instance can change over time (whenever a new stream is instanciated, for example after tls, sasl)
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-istreamfeatureservice.html">IStreamFeatureService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-itlsconfig.html">ITlsConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-itlsservice.html">ITlsService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-saslconfig.html">SaslConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-saslfeature.html">SaslFeature</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-streamfeatureconfig.html">StreamFeatureConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-tlsconfig.html">TlsConfig</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-runtime-features-tlsfeature.html">TlsFeature</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-features-parsing.html">Parsing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-features-parsingbind.html">ParsingBind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-features-saslparsing.html">SaslParsing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-runtime-features-tlsparsing.html">TlsParsing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xmpp.Server" class="anchor" href="#Yaaf.Xmpp.Server">Yaaf.Xmpp.Server Namespace</a></h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-configcreator.html">ConfigCreator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-configtype.html">ConfigType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-connectedcomponent.html">ConnectedComponent</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-connectionmanager.html">ConnectionManager</a>
+          </td>
+          <td class="xmldoc">
+ When editing this class be carefull with the XmppClient members, because they often can't be used directly
+ because this would result in a deadlock
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-defaultrouting.html">DefaultRouting</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iconnectionmanager.html">IConnectionManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iperuserservice.html">IPerUserService</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iserverapi.html">IServerApi</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iserverapiconnectionmanager.html">IServerApiConnectionManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iserverplugin.html">IServerPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iserverrouting.html">IServerRouting</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-istanzadelivery.html">IStanzaDelivery</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-iuserservicemanager.html">IUserServiceManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-keyvaluepair-2.html">KeyValuePair<'k, 'v></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-runninghandler.html">RunningHandler</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-servercertificatedata.html">ServerCertificateData</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-serversetup.html">ServerSetup</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-stanzadelivery.html">StanzaDelivery</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-userservicemanager.html">UserServiceManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-xmppserver.html">XmppServer</a>
+          </td>
+          <td class="xmldoc">
+ Represents a simple server implementation
+ This type takes care of connected resources, specified in XMPP.Core
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-xmppserverdeliveryplugin.html">XmppServerDeliveryPlugin</a>
+          </td>
+          <td class="xmldoc">
+ Plugin which is only available on the server side, and registers some server side only actions
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-xmppserverextensions.html">XmppServerExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-server-xmppserveruserserviceplugin.html">XmppServerUserServicePlugin</a>
+          </td>
+          <td class="xmldoc">
+ Plugin which is only available on the server side, and registers some server side only actions
+</br></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-server-interfaceextensions.html">InterfaceExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-server-xmppserversetup.html">XmppServerSetup</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-server-xmppsetup.html">XmppSetup</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+    <h2><a href="#Overview"><img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/back_to_top.png" alt="Back to top" /></a> <a name="Yaaf.Xmpp.XmlStanzas" class="anchor" href="#Yaaf.Xmpp.XmlStanzas">Yaaf.Xmpp.XmlStanzas Namespace</a></h2>
+    <div>
+        <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-contentgenerator-1.html">ContentGenerator<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-istanza.html">IStanza</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-langcode.html">Langcode</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-receivedstanzaexception.html">ReceivedStanzaException</a>
+          </td>
+          <td class="xmldoc">
+ Used when we parse a stanza with an error type
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanza.html">Stanza</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanza-1.html">Stanza<'a></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzacontents.html">StanzaContents</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzacreator.html">StanzaCreator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaerror.html">StanzaError</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaerrorconditon.html">StanzaErrorConditon</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaerrordata.html">StanzaErrorData</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaerrortype.html">StanzaErrorType</a>
+          </td>
+          <td class="xmldoc">
+ The "error-type" MUST be one of the following: 
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaexception.html">StanzaException</a>
+          </td>
+          <td class="xmldoc">
+ Used when we want to return a stanza error
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaheader.html">StanzaHeader</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaparseexception.html">StanzaParseException</a>
+          </td>
+          <td class="xmldoc">
+ Unable to parse a given stanza.
+ NOTE this does not inherit StanzaException because this exception is thrown within methods where the RawStanza is not available.
+ It will/can be catched and rethrown as StanzaException as soon as the RawStanza is available.
+ Or it will finally be handled in the XmlStanzaPlugin logic.
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzavalidationexception.html">StanzaValidationException</a>
+          </td>
+          <td class="xmldoc">
+ The stanza could not be validated
+</br></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="yaaf-xmpp-xmlstanzas-xmlstanzatype.html">XmlStanzaType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmlstanzas-parsing.html">Parsing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzamodule.html">Stanza</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaexceptionmodule.html">StanzaException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaextensions.html">StanzaExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="yaaf-xmpp-xmlstanzas-stanzaparseexceptionmodule.html">StanzaParseException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+        </div>
+        <div class="span3">
+          <a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">
+            <img src="https://matthid.github.io/Yaaf.Xmpp.Runtime/content/img/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">Yaaf.Xmpp.Runtime</li>
+
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/Yaaf.Xmpp.Runtime/">Get Yaaf.Xmpp.Runtime package via NuGet</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime">Source Code</a></li>
+            <li><a href="https://github.com/matthid//issues">Open bugs and feature requests</a></li>
+            <li><a href="https://github.com/matthid//issues/new">Report Issue or Request Feature</a></li>
+            <li><a href="https://github.com/matthid/Yaaf.Xmpp.Runtime/blob/develop/LICENSE.md">License (Apache 2)</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/Contributing.html">Contributing</a></li>
+            
+            <li class="nav-header">Documentation</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/index.html">Quick Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/ReleaseNotes.html">Release Notes</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/DevelopReadme.html">Development Intro</a></li>
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/buildConfig.html">An example build configuration</a></li>
+
+            <li class="nav-header">Reference</li>
+              
+            <li><a href="https://matthid.github.io/Yaaf.Xmpp.Runtime/references/index.html">API Reference</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+      <a href="https://github.com/matthid/Yaaf.Xmpp.Runtime"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    </body>
+  </html>
