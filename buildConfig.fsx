@@ -63,7 +63,8 @@ let buildConfig =
           Attribute.Version config.Version
           Attribute.FileVersion config.Version
           Attribute.InformationalVersion config.Version]
-      CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.fs" info)
+      CreateFSharpAssemblyInfo "./src/SolutionInfo.fs" info
+      CreateCSharpAssemblyInfo "./src/SolutionInfo.cs" info)
     EnableProjectFileCreation = false
     GeneratedFileList =
         [ "DnDns.dll"
