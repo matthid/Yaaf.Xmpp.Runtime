@@ -50,8 +50,8 @@ let buildConfig =
               ReleaseNotes = toLines release.Notes
               Dependencies = 
                 [ "Yaaf.FSharp.Helper", "0.1.3"
-                  "Yaaf.DependencyInjection", "1.0.0"
-                  "Yaaf.DependencyInjection.Ninject", "1.0.0"
+                  "Yaaf.DependencyInjection", "1.1.0"
+                  "Yaaf.DependencyInjection.SimpleInjector", "1.1.3"
                   "FSharp.Core", "3.1.2.1"
                   "Yaaf.Sasl", "1.0.0" ] }) ]
     UseNuget = false

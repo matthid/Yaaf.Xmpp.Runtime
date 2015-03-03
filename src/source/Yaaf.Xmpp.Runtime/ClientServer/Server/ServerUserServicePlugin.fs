@@ -10,13 +10,13 @@ open Yaaf.Xmpp
 
 type IUserServiceManager =
     abstract JabberId : JabberId
-    abstract GetService<'a> : unit -> 'a
+    abstract GetService<'a when 'a : not struct> : unit -> 'a
 type UserServiceManager (kernel : IKernel, jid) =
 
     member x.Kernel = kernel
     interface IUserServiceManager with
         member x.JabberId = jid
-        member x.GetService<'a> () = kernel.Get<'a>()
+        member x.GetService<'a when 'a : not struct> () = kernel.Get<'a>()
 
 type IPerUserService = 
     inherit IServiceManager

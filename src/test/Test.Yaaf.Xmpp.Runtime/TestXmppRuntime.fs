@@ -50,7 +50,7 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
     
     let config = RuntimeConfig.Default
     let createRuntime coreApi =
-        new XmppRuntime(coreApi, config, NinjectKernelCreator.CreateKernel())
+        new XmppRuntime(coreApi, config, SimpleInjectorKernelCreator.CreateKernel())
 
     [<Test>]
     member this.``check that connection setup calls the relevant methods``() = 
@@ -140,7 +140,7 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
             Mock<ICoreStreamApi>()
                 .Setup(fun x -> <@ x.CoreStreamHistory @>).Returns([])
                 .Create()
-        let kernel = NinjectKernelCreator.CreateKernel()
+        let kernel = SimpleInjectorKernelCreator.CreateKernel()
         let runtime = new XmppRuntime(coreApi, config, kernel)
         // TestPlugin2 shouldn't work because ITestService is not available!
         raises<ConfigurationException>

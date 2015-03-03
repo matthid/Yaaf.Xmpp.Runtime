@@ -11,8 +11,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
 	ProjectSection(SolutionItems) = preProject
 		..\buildConfig.fsx = ..\buildConfig.fsx
-		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
-		..\README.md = ..\README.md
 		..\nuget\Yaaf.Xmpp.Runtime.nuspec = ..\nuget\Yaaf.Xmpp.Runtime.nuspec
 	EndProjectSection
 EndProject
@@ -24,7 +22,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xmpp.Runtime", "source
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{1572AB1D-0D26-476E-AEE8-4D4D37CE8033}"
 	ProjectSection(SolutionItems) = preProject
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
 		..\doc\DevelopReadme.md = ..\doc\DevelopReadme.md
+		..\README.md = ..\README.md
 		..\doc\ReleaseNotes.md = ..\doc\ReleaseNotes.md
 	EndProjectSection
 EndProject
@@ -41,6 +41,15 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.TestHelper", "test\Yaaf.TestHelper\Yaaf.TestHelper.fsproj", "{DDB71495-347D-4646-9D06-49CD2E6F2795}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Xmpp.Testproject", "test\Yaaf.Xmpp.Testproject\Yaaf.Xmpp.Testproject.fsproj", "{D4659895-36D0-4BDB-B315-58AC36F53616}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{BB665E19-25F0-4897-BC8F-A51B88D453E4}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\templates\docpage-index.cshtml = ..\doc\templates\docpage-index.cshtml
+		..\doc\templates\docpage.cshtml = ..\doc\templates\docpage.cshtml
+		..\doc\templates\template-color.tex = ..\doc\templates\template-color.tex
+		..\doc\templates\template-math.tex = ..\doc\templates\template-math.tex
+		..\doc\templates\template.cshtml = ..\doc\templates\template.cshtml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,5 +141,6 @@ Global
 		{82BF7596-8A7F-4555-8CE9-6CA66E8A585B} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 		{DDB71495-347D-4646-9D06-49CD2E6F2795} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 		{D4659895-36D0-4BDB-B315-58AC36F53616} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
+		{BB665E19-25F0-4897-BC8F-A51B88D453E4} = {1572AB1D-0D26-476E-AEE8-4D4D37CE8033}
 	EndGlobalSection
 EndGlobal

@@ -11,7 +11,7 @@ nuget FSharp.Core
 nuget Yaaf.FSharp.Helper
 nuget Yaaf.Sasl
 nuget Yaaf.DependencyInjection
-nuget Yaaf.DependencyInjection.Ninject
+nuget Yaaf.DependencyInjection.SimpleInjector
 
 // Test
 // Until Visual Studio test runner supports later versions.

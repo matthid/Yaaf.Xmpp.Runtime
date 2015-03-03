@@ -36,7 +36,7 @@ type ``Test-Yaaf-Xmpp-Runtime-Server-PerUserService: Check that the per-user ser
     
     [<Test>]
     member this.``Check if we get the same instance with different resources`` () =
-        let perUser = XmppServerUserServicePlugin(Mock<IServerApi>().Create(), NinjectKernelCreator.CreateKernel()) :> IPerUserService
+        let perUser = XmppServerUserServicePlugin(Mock<IServerApi>().Create(), SimpleInjectorKernelCreator.CreateKernel()) :> IPerUserService
         
         perUser.RegisterService<ITestService, TestService>()
         let noResource = perUser.ForUser (JabberId.Parse "test@nunit.org")
@@ -50,5 +50,5 @@ type ``Test-Yaaf-Xmpp-Runtime-Server-PerUserService: Check that the per-user ser
         resource1TestService.Test <- "once again"
 
         let resource2 = perUser.ForUser (JabberId.Parse "test@nunit.org/more")
-        let resource2TestService = resource1.GetService<ITestService>()
+        let resource2TestService = resource2.GetService<ITestService>()
         test <@  resource2TestService.Test = "once again" @>

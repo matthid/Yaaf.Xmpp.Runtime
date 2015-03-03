@@ -48,4 +48,4 @@ type IXmppClient =
     abstract Exited : Task<exn option>
 
     /// The main method to interact with the instance, request the services you want to use (registered by plugins) and use then accordingly.
-    abstract GetService<'a> : unit -> 'a
+    abstract GetService<'a when 'a : not struct> : unit -> 'a
