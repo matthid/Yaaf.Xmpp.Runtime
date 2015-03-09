@@ -17,7 +17,7 @@ nuget Yaaf.DependencyInjection.SimpleInjector
 // Until Visual Studio test runner supports later versions.
 nuget NUnit == 2.6.3
 nuget Unquote
-nuget Foq
+nuget Foq content: none
 nuget FsUnit
 
 github matthid/Yaaf.FSharp.Helper src/test/Test.Yaaf.FSharp.Helper/MyTestClass.fs

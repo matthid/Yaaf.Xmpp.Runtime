@@ -65,12 +65,6 @@
   </Target>
   -->
   <ItemGroup>
-    <Content Include="net40\Foq.Usage.fsx">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="net45\Foq.Usage.fsx">
-      <Paket>True</Paket>
-    </Content>
     <Compile Include="..\..\SolutionInfo.fs">
       <Link>SolutionInfo.fs</Link>
     </Compile>
