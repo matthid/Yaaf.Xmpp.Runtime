@@ -3,7 +3,9 @@
 // file 'LICENSE.txt', which is part of this source code package.
 // ----------------------------------------------------------------------------
 namespace Yaaf.Xmpp.Runtime
+open Yaaf.Helper
 
+/// Used to manage a primitive stream and to provide an higher level API.
 type StreamManager<'prim>(p:'prim, provider : 'prim -> IXmlStream) =
     let mutable isOpen = false
     let mutable isClosed = false
@@ -21,8 +23,13 @@ type StreamManager<'prim>(p:'prim, provider : 'prim -> IXmlStream) =
     member x.OpenStream() =
         async {
             isOpen <- true
-            xmlStream <- Some (provider(p))
-            do! x.OpenStreamOverride()
+            try
+              xmlStream <- Some (provider(p))
+              do! x.OpenStreamOverride()
+            with e ->
+              isOpen <- false
+              isClosed <- true
+              Task.reraisePreserveStackTrace e
         }
     member x.PrimitiveStream = p
     member x.XmlStream =
@@ -41,6 +48,7 @@ type StreamManager<'prim>(p:'prim, provider : 'prim -> IXmlStream) =
     interface IStreamManager<'prim> with
         member x.PrimitiveStream = x.PrimitiveStream
         
+/// Used to provide (and abstract away) the core communication layer.
 type CoreStreamApi(opener : IInternalStreamOpener) =
     let mutable isCurrentStreamOpen = false
     let mutable isCurrentStreamClosed = false
@@ -65,9 +73,14 @@ type CoreStreamApi(opener : IInternalStreamOpener) =
         }
     let openStream () = 
         async {
-            let! current = getFirst()
-            do! opener.OpenStream(current)
-            isCurrentStreamOpen <- true
+            try
+                let! current = getFirst()
+                do! opener.OpenStream(current)
+                isCurrentStreamOpen <- true
+            with e ->
+                isCurrentStreamClosed <- true
+                isCurrentStreamOpen <- false
+                Task.reraisePreserveStackTrace e
         }
     let closeStream () = 
         async {

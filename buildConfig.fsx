@@ -49,11 +49,11 @@ let buildConfig =
               Version = config.Version
               ReleaseNotes = toLines release.Notes
               Dependencies = 
-                [ "Yaaf.FSharp.Helper", "0.1.3"
-                  "Yaaf.DependencyInjection", "1.1.0"
-                  "Yaaf.DependencyInjection.SimpleInjector", "1.1.3"
-                  "FSharp.Core", "3.1.2.1"
-                  "Yaaf.Sasl", "1.0.0" ] }) ]
+                [ "Yaaf.FSharp.Helper"
+                  "Yaaf.DependencyInjection"
+                  "Yaaf.DependencyInjection.SimpleInjector"
+                  "FSharp.Core"
+                  "Yaaf.Sasl" ] |> List.map (fun name -> name, (GetPackageVersion "packages" name)) }) ]
     UseNuget = false
     SetAssemblyFileVersions = (fun config ->
       let info =

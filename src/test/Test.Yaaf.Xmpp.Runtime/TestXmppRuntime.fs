@@ -77,7 +77,8 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         Mock.Verify(<@ coreApi.OpenStream() @>, Times.never)
         Mock.Verify(<@ coreApi.CloseStream() @>, Times.never)
 
-        runtime.Connect(stream) |> waitTask
+        let result = runtime.Connect(stream) |> waitTask
+        test <@ result = None @>
 
         Mock.Verify(<@ coreApi.SetCoreStream(stream) @>, Times.exactly 1)
         Mock.Verify(<@ coreApi.OpenStream() @>, Times.exactly 1)
@@ -122,7 +123,8 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         xmlPluginMgr.RegisterPlugin(xmlPlugin)
 
         let stream = Mock<IStreamManager>().Create()
-        runtime.Connect(stream) |> waitTask
+        let result = runtime.Connect(stream) |> waitTask
+        test <@ result = None @>
         Mock.Verify(<@ xmlPlugin.StreamOpened() @>, Times.exactly 1)
         Mock.Verify(<@ receivePipeline.Modify(any()) @>, Times.exactly 1)
         Mock.Verify(<@ receivePipeline.HandlerState(any()) @>, Times.exactly 1)
@@ -139,9 +141,10 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         let coreApi =
             Mock<ICoreStreamApi>()
                 .Setup(fun x -> <@ x.CoreStreamHistory @>).Returns([])
+                .Setup(fun x -> <@ x.CloseStream() @>).Returns(async.Return())
                 .Create()
         let kernel = SimpleInjectorKernelCreator.CreateKernel()
-        let runtime = new XmppRuntime(coreApi, config, kernel)
+        use runtime = new XmppRuntime(coreApi, config, kernel)
         // TestPlugin2 shouldn't work because ITestService is not available!
         raises<ConfigurationException>
             (<@ runtime.PluginManager.RegisterPlugin<TestPlugin2>() @>)
@@ -274,7 +277,8 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         let t = shutdown.RuntimeTask.ContinueWith (fun (t:System.Threading.Tasks.Task<_>) -> isShutdownCalled := true)
 
         let stream = Mock<IStreamManager>().Create()
-        runtime.Connect(stream) |> waitTask
+        let result = runtime.Connect(stream) |> waitTask
+        test <@ result = None @>
         t |> waitTask
         test <@ isShutdownCalled.Value @>
         Mock.Verify(<@ coreApi.CloseStream() @>, Times.atleastonce)
@@ -326,7 +330,9 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         let t = shutdown.RuntimeTask.ContinueWith (fun (t:System.Threading.Tasks.Task<_>) -> isShutdownCalled := true)
         
         let stream = Mock<IStreamManager>().Create()
-        runtime.Connect(stream) |> waitTask
+        let result = runtime.Connect(stream) |> waitTask
+        test <@ result = None @>
         t |> waitTask
         test <@ isShutdownCalled.Value @>
         Mock.Verify(<@ coreApi.CloseStream() @>, Times.atleastonce)
+

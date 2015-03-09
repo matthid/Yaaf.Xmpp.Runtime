@@ -15,8 +15,6 @@ New features are accepted via github pull requests (so just fork away right now!
 
 Issues and TODOs are tracked on github, see: https://github.com/matthid/Yaaf.Xmpp.Runtime/issues
 
-Discussions/Forums are on IRC. 
-
 ### Versioning: 
 
 http://semver.org/
@@ -29,4 +27,4 @@ http://semver.org/
 
 - `Yaaf.Xmpp.Runtime.Core`: Some core interfaces, which need to be C# because of F# compiler limitations.
 
-- `Yaaf.Xmpp.Runtime`: For one a project to test the building infrastructure, in the future a helper to generate fsproj and csproj files.
+- `Yaaf.Xmpp.Runtime`: The xmpp library implementation.

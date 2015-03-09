@@ -238,7 +238,11 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
         try 
             Async.RunSynchronously((*asCancellable time*) asy, timeout = time)
         with :? System.TimeoutException as t -> raise <| new System.TimeoutException(sprintf "XmppClient Property %s timed out" name, t)
-        
+    
+    member x.Dispose () = runtime.Dispose()
+    interface System.IDisposable with
+      member x.Dispose () = x.Dispose()
+
     member x.Runtime = runtime
     
     member x.Exited = task
@@ -292,7 +296,7 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
         let kernel = setup.Kernel
         let runtimeConfig = kernel.Get<IRuntimeConfig>()
         let stream = kernel.Get<IStreamManager>()
-        let runtime = XmppRuntime(new CoreStreamApi(new OpenHandshake.XmppCoreStreamOpener(runtimeConfig)), runtimeConfig, kernel)
+        let runtime = new XmppRuntime(new CoreStreamApi(new OpenHandshake.XmppCoreStreamOpener(runtimeConfig)), runtimeConfig, kernel)
         setup.InitRuntime runtime
         let task = runtime.Connect(stream)
         let client = XmppClient(runtime, task)

@@ -62,6 +62,11 @@
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Helper\src\test\Test.Yaaf.FSharp.Helper\MyTestClass.fs">
+      <Link>MyTestClass.fs</Link>
+    </Compile>
+    <Compile Include="TestHelper.fs" />
+    <Compile Include="TestSimpleHelper.fs" />
     <Compile Include="TestIXmlStream.fs" />
     <Compile Include="TestStreamOpening.fs" />
     <Compile Include="TestXmppRuntime.fs" />
@@ -71,7 +76,6 @@
     <Compile Include="TestAddressingPlugin.fs" />
     <None Include="Script.fsx" />
     <None Include="app.config" />
-    <Compile Include="TestHelper.fs" />
     <Compile Include="JabberId.fs" />
     <Compile Include="Stream.fs" />
     <Compile Include="OpenHandshake.fs" />

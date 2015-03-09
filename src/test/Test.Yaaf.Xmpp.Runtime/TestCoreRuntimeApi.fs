@@ -147,12 +147,23 @@ type TestCoreStreamApi() =
         let streamManager2 =createStreamManager(xmlStream2)
         coreApi.SetCoreStream(streamManager2)
         test <@ coreApi.CoreStreamHistory = [streamManager2; streamManager1] @>
+       
+    [<Test>]
+    member this.``check that stream is closed when OpenStream fails``() = 
+        raises<System.InvalidOperationException> <@ coreApi.OpenStream() |> Async.StartAsTask |> waitTask@>
+        test <@ coreApi.IsClosed = true @>
+        raises<System.InvalidOperationException> <@ coreApi.OpenStream() |> Async.StartAsTask |> waitTask@>
         
     [<Test>]
-    member this.``check that we can't OpenStream and CloseStream without stream``() = 
-        raises<System.InvalidOperationException> <@ coreApi.OpenStream() |> Async.StartAsTask |> waitTask@>
+    member this.``check that CloseStream closes stream``() =
         raises<System.InvalidOperationException> <@ coreApi.CloseStream() |> Async.StartAsTask |> waitTask@>
-        
+        test <@ coreApi.IsClosed = true @>
+
+    [<Test>]
+    member this.``check that SetCoreStream resets a failed state``() =
+        raises<System.InvalidOperationException> <@ coreApi.OpenStream() |> Async.StartAsTask |> waitTask@>
+        test <@ coreApi.IsClosed = true @>
+
         let xmlStream1 =
             Mock<IXmlStream>()
                 .Setup(fun x -> <@ x.TryRead() @>).Returns(async.Return None)
@@ -160,7 +171,24 @@ type TestCoreStreamApi() =
                 .Setup(fun x -> <@ x.WriteEnd() @>).Returns(async.Return ())
                 .Setup(fun x -> <@ x.WriteStart(any()) @>).Returns(async.Return ())
                 .Create()
-        let streamManager1 =createStreamManager(xmlStream1)
+        let streamManager1 = createStreamManager(xmlStream1)
+        coreApi.SetCoreStream(streamManager1)
+        coreApi.OpenStream() |> Async.StartAsTask |> waitTask
+        coreApi.CloseStream() |> Async.StartAsTask |> waitTask
+        
+    [<Test>]
+    member this.``check that SetCoreStream resets after closing``() =
+        raises<System.InvalidOperationException> <@ coreApi.CloseStream() |> Async.StartAsTask |> waitTask@>
+        test <@ coreApi.IsClosed = true @>
+
+        let xmlStream1 =
+            Mock<IXmlStream>()
+                .Setup(fun x -> <@ x.TryRead() @>).Returns(async.Return None)
+                .Setup(fun x -> <@ x.Write(any()) @>).Returns(async.Return ())
+                .Setup(fun x -> <@ x.WriteEnd() @>).Returns(async.Return ())
+                .Setup(fun x -> <@ x.WriteStart(any()) @>).Returns(async.Return ())
+                .Create()
+        let streamManager1 = createStreamManager(xmlStream1)
         coreApi.SetCoreStream(streamManager1)
         coreApi.OpenStream() |> Async.StartAsTask |> waitTask
         coreApi.CloseStream() |> Async.StartAsTask |> waitTask

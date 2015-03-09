@@ -2,6 +2,8 @@ Yaaf.Xmpp.Runtime
 ===================
 ## [Documentation](https://matthid.github.io/Yaaf.Xmpp.Runtime/)
 
+[![Join the chat at https://gitter.im/matthid/Yaaf.Xmpp.Runtime](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/matthid/Yaaf.Xmpp.Runtime?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Build status
 
 **Development Branch**
@@ -37,3 +39,5 @@ Yaaf.Xmpp.Runtime
  * Asynchronous from the core by design (NOTE: currently we are limited by System.XML not being completely asynchronous.
    Because we currently use a mono port, but now with https://github.com/dotnet/corefx we may be able to use that instead.)
  * While called "Xmpp.Runtime" this library is flexible enough to build any kind of XML based communication on top of any kind of transportation layer.
+ * Portability: This project tries to provide a framework / library usable on any device (Android, iOS, Windows Phone, Windows, Linux, MAC).
+   (Not completely done, but all references are already portable! The current focus is a usable server implementation.)
