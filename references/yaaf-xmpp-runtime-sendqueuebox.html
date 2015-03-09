@@ -43,7 +43,9 @@
     Defined in Yaaf.Xmpp.Runtime.dll.
 </div>
 <div class="xmldoc">
-</div>
+
+ A specialiced Mailbox for outgoing messages.
+</br></div>
   <h3>Constructors</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -53,15 +55,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '607', 607)" onmouseover="showTip(event, '607', 607)">
+          <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
             new(sendAction)
           </code>
-          <div class="tip" id="607">
+          <div class="tip" id="608">
             <strong>Signature:</strong> (sendAction:(StreamElement option -&gt; Async&lt;unit&gt;)) -&gt; SendQueueBox<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L18-18" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L19-19" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -79,33 +81,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
+          <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
             BlockSend(work)
           </code>
-          <div class="tip" id="608">
+          <div class="tip" id="609">
             <strong>Signature:</strong> (work:(unit -&gt; Async&lt;unit&gt;)) -&gt; Async&lt;unit&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L58-58" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
-            Error
-          </code>
-          <div class="tip" id="609">
-            <strong>Signature:</strong> Task&lt;exn&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L51-51" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L59-59" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -116,14 +100,32 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '610', 610)" onmouseover="showTip(event, '610', 610)">
-            SendMessages(msgs)
+            Error
           </code>
           <div class="tip" id="610">
-            <strong>Signature:</strong> (msgs:StreamElement list) -&gt; unit<br />
+            <strong>Signature:</strong> Task&lt;exn&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L52-52" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '611', 611)" onmouseover="showTip(event, '611', 611)">
+            SendMessages(msgs)
+          </code>
+          <div class="tip" id="611">
+            <strong>Signature:</strong> (msgs:StreamElement list) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/Runtime/Runtime.fs#L53-53" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
