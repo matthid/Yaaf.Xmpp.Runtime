@@ -15,6 +15,7 @@ type internal SendQueueAction =
     | EnqueueMessage of StreamElement list
     | BlockSend of (unit -> unit Async) * AsyncReplyChannel<unit>
 
+/// A specialiced Mailbox for outgoing messages.
 type SendQueueBox (sendAction) =
     let errorTask = System.Threading.Tasks.TaskCompletionSource<exn>()
     let mailbox =
@@ -61,6 +62,7 @@ type SendQueueBox (sendAction) =
         else
             reThrowHelper errorTask.Task.Result
 
+/// A IPluginManagerRegistrar implementation using an IKernel
 type PluginManagerRegistrar(kernel : IKernel) = 
     interface IPluginManagerRegistrar with
         member x.RegisterFor<'T> instance =
@@ -71,7 +73,8 @@ type PluginManagerRegistrar(kernel : IKernel) =
             pluginManager :> IPluginManager<'T>
         member x.GetManager<'T> () =
             kernel.Get<IPluginManager<'T>>()
-        
+     
+/// A simple API to prevent that code after "StartSingle" is called twice   
 type SingleChecker() =
     let o = obj()
     let mutable isStarted = false
@@ -85,9 +88,6 @@ type SingleChecker() =
                     raise exn
                 else
                     isStarted <- true)
-
-
-
 
 /// Represents the part of the runtime which doesn't depend on the 'prim type
 type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKernel) as x =
@@ -126,15 +126,15 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
             invalidArg "coreApi" "the coreApi has to be unused, to start a connection"
         //childKernel.Bind<IKernel>().ToConstant(childKernel) |> ignore
         ServicePluginManager.RegisterServices (childKernel, coreApi.PluginService, createError)
-        childKernel.Bind<IServicePluginManager<IXmppPlugin>>().ToConstant(pluginManager) |> ignore
-        childKernel.Bind<IXmlPluginManager>().ToConstant(xmlPipelineManager) |> ignore
-        childKernel.Bind<IPluginManager<IXmlPipelinePlugin>>().ToConstant(xmlPipelineManager) |> ignore
-        childKernel.Bind<ICoreStreamApi>().ToConstant(coreApi) |> ignore
-        childKernel.Bind<ILocalDelivery>().ToConstant(x) |> ignore
-        childKernel.Bind<IRuntimeShutdown>().ToConstant(runtimeShutdownProvider) |> ignore
-        childKernel.Bind<IExclusiveSend>().ToConstant(x) |> ignore
-        childKernel.Bind<IPluginManagerRegistrar>().ToConstant(registrar) |> ignore
-        childKernel.Bind<IRuntimeConfig>().ToConstant(config) |> ignore
+        childKernel.Rebind<IServicePluginManager<IXmppPlugin>>().ToConstant(pluginManager) |> ignore
+        childKernel.Rebind<IXmlPluginManager>().ToConstant(xmlPipelineManager) |> ignore
+        childKernel.Rebind<IPluginManager<IXmlPipelinePlugin>>().ToConstant(xmlPipelineManager) |> ignore
+        childKernel.Rebind<ICoreStreamApi>().ToConstant(coreApi) |> ignore
+        childKernel.Rebind<ILocalDelivery>().ToConstant(x) |> ignore
+        childKernel.Rebind<IRuntimeShutdown>().ToConstant(runtimeShutdownProvider) |> ignore
+        childKernel.Rebind<IExclusiveSend>().ToConstant(x) |> ignore
+        childKernel.Rebind<IPluginManagerRegistrar>().ToConstant(registrar) |> ignore
+        childKernel.Rebind<IRuntimeConfig>().ToConstant(config) |> ignore
     
 
     let sendBoxFinished = AsyncManualResetEvent()
@@ -211,22 +211,24 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
             with
             | :? StreamErrorException as error -> 
                 // we have to close the stream
-                do! coreApi.FailwithStream error
+                try do! coreApi.FailwithStream error
+                with e -> Log.Warn(fun _ -> L "Error in FailwithStream: %O" e)
                 reraisePreserveStackTrace (error :> exn)
             | :? StreamNormalFinishedException as f -> 
                 do! coreApi.CloseStream()
             | :? StreamFinishedException as f -> 
                 // The other side closed the stream already, so close it
-                do! coreApi.CloseStream()
+                try do! coreApi.CloseStream()
+                with e -> Log.Warn(fun _ -> L "Error in CloseStream: %O" e)
                 reraisePreserveStackTrace (f:> exn)
             | exn -> 
                 // tell the other side we failed :(
                 // we log this exception in case the Failwith call fails again...
-                Log.Err(fun _ -> L "Unknown error in XmppCore (on handler loop): %O" exn)
-                try
-                    do! coreApi.FailwithStream 
+                try do! coreApi.FailwithStream 
                             (StreamErrorException(XmlStreamError.InternalServerError, Some "unknown error", []))
-                with :? SendStreamClosedException -> ()
+                with 
+                | :? SendStreamClosedException -> ()
+                | e -> Log.Warn(fun _ -> L "Error in FailwithStream: %O" e)
                 reraisePreserveStackTrace exn
          } |> Log.TraceMeAs "XmppRuntime-Loop"
     let handleConnection (prim:IStreamManager) =
@@ -260,7 +262,7 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                 with :? SendStreamClosedException -> ()
             | None ->
                 do! coreApi.CloseStream()
-            sendBoxFinished.Set()
+                sendBoxFinished.Set()
 
                 //if coreApi.IsClosed && not  then
                 //    sendBox.SendMessages []
@@ -296,6 +298,13 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                     } |> Async.RunSynchronously
             with exn ->
                 Log.Err(fun () -> L "Error in sendbox.Error continuation: %A" exn)) |> ignore
+    
+    member x.Dispose () =
+        worker.Dispose()
+        try x.CloseConnection(true) |> Async.RunSynchronously
+        with e -> Log.Warn (fun _ -> L "Error on XmppRuntime.Dispose: %O" e)
+    interface System.IDisposable with
+        member x.Dispose () = x.Dispose()
 
     static member internal CreateErrorHelper = createError
     member x.Connect (prim:IStreamManager) = handleConnection prim

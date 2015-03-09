@@ -141,9 +141,10 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         let coreApi =
             Mock<ICoreStreamApi>()
                 .Setup(fun x -> <@ x.CoreStreamHistory @>).Returns([])
+                .Setup(fun x -> <@ x.CloseStream() @>).Returns(async.Return())
                 .Create()
         let kernel = SimpleInjectorKernelCreator.CreateKernel()
-        let runtime = new XmppRuntime(coreApi, config, kernel)
+        use runtime = new XmppRuntime(coreApi, config, kernel)
         // TestPlugin2 shouldn't work because ITestService is not available!
         raises<ConfigurationException>
             (<@ runtime.PluginManager.RegisterPlugin<TestPlugin2>() @>)
@@ -334,3 +335,4 @@ type ``Test-Yaaf-Xmpp-Runtime-XmppRuntime: Check that the runtime behaves as exp
         t |> waitTask
         test <@ isShutdownCalled.Value @>
         Mock.Verify(<@ coreApi.CloseStream() @>, Times.atleastonce)
+

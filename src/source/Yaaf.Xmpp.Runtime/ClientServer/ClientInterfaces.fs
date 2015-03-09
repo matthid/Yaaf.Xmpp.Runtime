@@ -20,6 +20,7 @@ type ConnectInfo =
 
 /// Simple interface representing an xmpp connection
 type IXmppClient = 
+    inherit System.IDisposable
     /// True when the runtime loop has finished with an exception (abnormal termination)
     abstract IsFaulted : bool with get
     /// True when the runtime loop has completed without exception
