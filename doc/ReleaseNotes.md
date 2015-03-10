@@ -1,4 +1,8 @@
-﻿### 0.0.4
+﻿### 0.0.5
+
+ * Cleanup/Dispose IXmppClient in Connection manager.
+
+### 0.0.4
 
  * Make sure IXmppClient is accessible in XmppRuntime.
 
