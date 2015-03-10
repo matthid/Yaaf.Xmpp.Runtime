@@ -1,4 +1,8 @@
-﻿### 0.0.3
+﻿### 0.0.4
+
+ * Make sure IXmppClient is accessible in XmppRuntime.
+
+### 0.0.3
 
  * Use Rebind to support SimpleInjector.
  * Improve some exit code handling (exception handling).
