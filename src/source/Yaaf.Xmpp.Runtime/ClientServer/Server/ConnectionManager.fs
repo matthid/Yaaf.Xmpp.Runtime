@@ -37,16 +37,16 @@ type ConnectionManager(myDomain : string) as this =
     let addClientConnection (jid : JabberId) (xmppClient : IXmppClient) = 
         // Note don't use xmppClient as we are within a context (possibly within the NegotiationComplete event)
         let bareId = jid.BareId
-        let resources = clientConnections.GetOrAdd(bareId, fun b -> new ConcurrentDictionary<_, _>())
+        let resources = clientConnections.GetOrAdd(bareId, fun _ -> new ConcurrentDictionary<_, _>())
         match jid.Resource with
         | None -> failwith "no resource attached to client"
         | Some r -> 
-            resources.AddOrUpdate(r, xmppClient, fun res old -> closeOldWithConflict old xmppClient) |> ignore
+            resources.AddOrUpdate(r, xmppClient, fun _ old -> closeOldWithConflict old xmppClient) |> ignore
             Log.Info(fun () -> L "Client connected and added to connections: %s" jid.FullId)
     
     let addServerConnection (jid : JabberId) (xmppClient : IXmppClient) = 
         let bareId = jid.BareId
-        outgoingS2sConnections.AddOrUpdate(bareId, xmppClient, fun s c -> closeOldWithConflict c xmppClient) |> ignore
+        outgoingS2sConnections.AddOrUpdate(bareId, xmppClient, fun _ c -> closeOldWithConflict c xmppClient) |> ignore
     
     let addConnection (streamType : StreamType) (jid : JabberId) (xmppClient : IXmppClient)  = 
         (if streamType.OnClientStream then addClientConnection
@@ -56,16 +56,16 @@ type ConnectionManager(myDomain : string) as this =
             clientNegotiated.Trigger(this, (xmppClient))
         } |> Log.TraceMe |> Async.Start
     [<CLIEventAttribute>]
-    member x.Errors = errors.Publish
+    member __.Errors = errors.Publish
     
     [<CLIEventAttribute>]
-    member x.ClientNegotiated = clientNegotiated.Publish
+    member __.ClientNegotiated = clientNegotiated.Publish
     
     [<CLIEventAttribute>]
-    member x.ClientDisconnected = clientDisconnected.Publish
+    member __.ClientDisconnected = clientDisconnected.Publish
     
     // This member should be protected
-    member x.ClientExited((xmppClient : IXmppClient), (res : exn option)) = 
+    member __.ClientExited((xmppClient : IXmppClient), (res : exn option)) =
         // remove faulted/closed connection
         async { 
             let connectTask = xmppClient.ConnectTask
@@ -78,11 +78,10 @@ type ConnectionManager(myDomain : string) as this =
                                                                | None -> "normal exit"
                                                                | Some exn -> exn.Message))
             match res with
-            | Some e -> 
-                errors.Trigger(this, e)
+            | Some e -> errors.Trigger(this, e)
             | None -> ()
             match pendingConnections.TryRemove(xmppClient) with
-            | true, v -> 
+            | true, _ ->
                 // failed within negotiation/connection establishment
                 Log.Warn(fun () -> L "client failed within negotiation, closing connection, reason: %O" res)
             | _ ->
@@ -95,7 +94,7 @@ type ConnectionManager(myDomain : string) as this =
                     let jid = connectTask.Result
                     let bareId = jid.BareId
                     if xmppClient.StreamType.OnClientStream then 
-                        let resources = clientConnections.GetOrAdd(bareId, fun b -> new ConcurrentDictionary<_, _>())
+                        let resources = clientConnections.GetOrAdd(bareId, fun _ -> new ConcurrentDictionary<_, _>())
                         match resources.TryRemove(jid.Resource.Value, xmppClient) with
                         | true -> 
                             Log.Info(fun () -> L "removed client connection")
@@ -118,7 +117,7 @@ type ConnectionManager(myDomain : string) as this =
     member private x.MyNegotiationComplete (jid : JabberId) (xmppClient : IXmppClient) = 
         Log.Info(fun () -> L "MyNegotiationComplete")
         match pendingConnections.TryRemove(xmppClient) with
-        | true, v -> 
+        | true, _ ->
             // negotiation completed
             try 
                 if stopToken.Token.IsCancellationRequested then failwith "Server already shut down!"
@@ -138,7 +137,8 @@ type ConnectionManager(myDomain : string) as this =
     
     member x.RegisterIncommingConnection(xmppClient : IXmppClient) = 
         if stopToken.Token.IsCancellationRequested then failwith "Server already shut down!"
-        pendingConnections.AddOrUpdate(xmppClient, xmppClient, fun client data -> failwithf "this instance is already pending?") |> ignore
+        pendingConnections.AddOrUpdate(xmppClient, xmppClient, fun _ _ ->
+          failwithf "this instance is already pending? Cannot call RegisterIncommingConnection twice!") |> ignore
 
         xmppClient.Exited.ContinueWith(fun (t:Task<_>) -> x.MyClientExited xmppClient t.Result) |> ignore
         
@@ -152,21 +152,21 @@ type ConnectionManager(myDomain : string) as this =
             // Timeout connection after 5 minutes
             do! Async.Sleep(60000 * 5)
             match pendingConnections.TryRemove(xmppClient) with
-            | true, v -> 
+            | true, _ -> 
                 // timeout, CloseConnection should make sure that exited is called
-                Log.Err(fun () -> L "Connection timed out without negotiationComplete event!")
+                Log.Warn(fun () -> L "Connection timed out without negotiationComplete event!")
                 do! xmppClient.CloseConnection true
             | _ -> ()
         }
         |> Log.TraceMe
         |> Task.startTask x errors
     
-    member x.GetConnections(jid : JabberId) = 
+    member __.GetConnections(jid : JabberId) =
         let isLocal = jid.Domainpart = myDomain
         let bareId = jid.BareId
         Log.Verb(fun () -> L "GetConnections of %A (isLocal: %O)." bareId (isLocal))
         if isLocal then 
-            let resources = clientConnections.GetOrAdd(bareId, fun b -> new ConcurrentDictionary<_, _>())
+            let resources = clientConnections.GetOrAdd(bareId, fun _ -> new ConcurrentDictionary<_, _>())
             
             // Only consider completely negotiated connections (others could deadlock or take a long time to be available)
             let cons = 
@@ -185,7 +185,7 @@ type ConnectionManager(myDomain : string) as this =
             | true, s when s.NegotiationCompleted -> [ s ]
             | _ -> []
     
-    member x.Shutdown(force) = 
+    member __.Shutdown(force) =
         async { 
             let getCloseTask (k : KeyValuePair<_, IXmppClient>) = 
                 async {
@@ -208,6 +208,7 @@ type ConnectionManager(myDomain : string) as this =
                 |> Seq.append (outgoingS2sConnections |> Seq.map getCloseTask)
                 |> Seq.append (pendingConnections |> Seq.map getCloseTask)
             let! res = Task.WhenAll(closeTasks)
+            ignore res
             return ()
         }
         |> Log.TraceMe
@@ -224,6 +225,6 @@ type ConnectionManager(myDomain : string) as this =
         member x.ClientDisconnected = x.ClientDisconnected
         
         member x.RegisterIncommingConnection (xmppClient) = x.RegisterIncommingConnection(xmppClient)
-        member x.RegisterOutgoingConnection xmppClient = ()
+        member __.RegisterOutgoingConnection _ = ()
         member x.GetConnections jid = x.GetConnections jid
         member x.Shutdown force = x.Shutdown force
