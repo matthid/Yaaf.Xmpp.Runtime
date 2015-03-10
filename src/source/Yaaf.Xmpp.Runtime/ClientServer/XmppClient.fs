@@ -299,8 +299,12 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
         let runtime = new XmppRuntime(new CoreStreamApi(new OpenHandshake.XmppCoreStreamOpener(runtimeConfig)), runtimeConfig, kernel)
         setup.InitRuntime runtime
         let task = runtime.Connect(stream)
-        let client = XmppClient(runtime, task)
-        kernel.Bind<IXmppClient>().ToConstant(client) |> ignore
+        let client = new XmppClient(runtime, task)
+        runtime.PluginManager.RegisterPlugin(
+           { new IXmppPlugin with
+              member x.Name = "IXmppClient Provider"
+              member x.PluginService = Service.FromInstance<IXmppClient, _>(client)
+           })
         client
 
     static member Connect(connectInfo, connectData : AdvancedConnectInfo, setup:ClientSetup) = 

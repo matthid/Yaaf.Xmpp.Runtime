@@ -94,5 +94,21 @@ type ``Test-Yaaf-Xmpp-XmppClient: Check if XmppClient handles the Runtime proper
         test <@ client.IsClosed = true @>
         test <@ client.IsFaulted = true @>
         ()
-
-    // TODO: check if properties (like IsClosed etc) are correct.
+         
+    [<Test>]
+    member __.``check that Runtime can access IXmppClient``() =
+        let stream = new MemoryStream() :> Stream
+        let connectInfo = { LocalJid = JabberId.Parse ""; Login = [] }
+        let connectData = 
+          { RemoteHostname = "yaaf.de"
+            Stream = new IOStreamManager(stream)
+            RemoteJid = Some connectInfo.LocalJid.Domain
+            IsInitializing = true }
+        let client =
+            XmppClient.RawConnect(
+                XmppSetup.CreateSetup()
+                |> XmppSetup.addConnectInfo connectInfo connectData
+                |> XmppSetup.addCoreClient)
+        
+        let innerClient = client.Runtime.PluginManager.GetPluginService<IXmppClient>()
+        test <@ obj.ReferenceEquals(innerClient, client) @>
