@@ -29,7 +29,7 @@ type StreamManager<'prim>(p:'prim, provider : 'prim -> IXmlStream) =
             with e ->
               isOpen <- false
               isClosed <- true
-              Task.reraisePreserveStackTrace e
+              Async.reraise e
         }
     member x.PrimitiveStream = p
     member x.XmlStream =
@@ -80,7 +80,7 @@ type CoreStreamApi(opener : IInternalStreamOpener) =
             with e ->
                 isCurrentStreamClosed <- true
                 isCurrentStreamOpen <- false
-                Task.reraisePreserveStackTrace e
+                Async.reraise e
         }
     let closeStream () = 
         async {
