@@ -84,13 +84,10 @@ type ConnectionManager(myDomain : string) as this =
             match pendingConnections.TryRemove(xmppClient) with
             | true, v -> 
                 // failed within negotiation/connection establishment
-                Log.Warn(fun () -> L "failed within negotiation, closing connection")
-                do! xmppClient.CloseConnection true
-                ()
-            | _ -> 
-                
+                Log.Warn(fun () -> L "client failed within negotiation, closing connection, reason: %O" res)
+            | _ ->
                 if not connectTask.IsCompleted then
-                    failwith "connected client should have the connectTask completed"
+                    Log.Err(fun () -> L "connected client should have the connectTask completed")
                     //Log.Err(fun () -> L "Unable to resolve RemoteJid of negotiated Client?! Try again!")
                     //do! Async.Sleep 1000
                     //return! x.ClientExited (streamType, (xmppClient), res)
@@ -110,6 +107,8 @@ type ConnectionManager(myDomain : string) as this =
                             Log.Info(fun () -> L "removed s2s or component connection")
                             clientDisconnected.Trigger(this, (xmppClient, res))
                         | _ -> ()
+            xmppClient.Dispose()
+            Log.Info(fun () -> L "Disposed connection!")
         }
         |> Log.TraceMe
     
