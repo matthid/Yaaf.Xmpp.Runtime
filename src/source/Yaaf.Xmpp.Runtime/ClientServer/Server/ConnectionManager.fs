@@ -164,29 +164,28 @@ type ConnectionManager(myDomain : string) as this =
     member __.GetConnections(jid : JabberId) =
         let isLocal = jid.Domainpart = myDomain
         let bareId = jid.BareId
-        Log.Verb(fun () -> L "GetConnections of %A (isLocal: %O)." bareId (isLocal))
-        if isLocal then 
-            let resources = clientConnections.GetOrAdd(bareId, fun _ -> new ConcurrentDictionary<_, _>())
-            
-            // Only consider completely negotiated connections (others could deadlock or take a long time to be available)
-            let cons = 
-                resources
-                |> Seq.map (fun k -> k.Value)
-                |> Seq.filter (fun k -> k.NegotiationCompleted)
-                |> Seq.toList
-            Log.Verb(fun () -> L "GetConnections found %A." (cons |> Seq.map (fun c -> c.RemoteJid)))
-            if (jid.Resource.IsNone) then cons
-            else cons |> List.filter (fun con -> con.RemoteJid.Resource.Value = jid.Resource.Value)
-        //assert (cons |> Seq.forall (fun con -> not con.IsClosed && con.NegotiationCompleted))
-        //cons // |> List.filter (fun con -> not con.IsClosed)
-        else 
-            //failwith "outgoing currently not supported"
-            match outgoingS2sConnections.TryGetValue(bareId) with
-            | true, s when s.NegotiationCompleted -> [ s ]
-            | _ -> []
+        let results =
+            if isLocal then 
+                let resources = clientConnections.GetOrAdd(bareId, fun _ -> new ConcurrentDictionary<_, _>())
+                // Only consider completely negotiated connections (others could deadlock or take a long time to be available)
+                let cons = 
+                    resources
+                    |> Seq.map (fun k -> k.Value)
+                    |> Seq.filter (fun k -> k.NegotiationCompleted)
+                    |> Seq.toList
+                if (jid.Resource.IsNone) then cons
+                else cons |> List.filter (fun con -> con.RemoteJid.Resource.Value = jid.Resource.Value)
+            else 
+                //failwith "outgoing currently not supported"
+                match outgoingS2sConnections.TryGetValue(bareId) with
+                | true, s when s.NegotiationCompleted -> [ s ]
+                | _ -> []
+        Log.Verb(fun () -> L "GetConnections of %A (isLocal: %O). found %A." bareId isLocal (results |> Seq.map (fun c -> c.RemoteJid)))
+        results
     
     member __.Shutdown(force) =
-        async { 
+        async {
+            stopToken.Cancel()
             let getCloseTask (k : KeyValuePair<_, IXmppClient>) = 
                 async {
                     let client = k.Value
@@ -225,6 +224,7 @@ type ConnectionManager(myDomain : string) as this =
         member x.ClientDisconnected = x.ClientDisconnected
         
         member x.RegisterIncommingConnection (xmppClient) = x.RegisterIncommingConnection(xmppClient)
-        member __.RegisterOutgoingConnection _ = ()
+        member __.RegisterOutgoingConnection _ =
+            raise <| System.NotImplementedException("RegisterOutgoingConnection is not implemented.")
         member x.GetConnections jid = x.GetConnections jid
         member x.Shutdown force = x.Shutdown force
