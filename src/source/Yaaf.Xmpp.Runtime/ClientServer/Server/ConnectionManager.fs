@@ -14,6 +14,7 @@ open Yaaf.Xmpp.Runtime
 
 type KeyValuePair<'k, 'v> = System.Collections.Generic.KeyValuePair<'k, 'v>
 
+
 /// When editing this class be carefull with the XmppClient members, because they often can't be used directly
 /// because this would result in a deadlock
 type ConnectionManager(myDomain : string) as this = 
@@ -34,6 +35,30 @@ type ConnectionManager(myDomain : string) as this =
             |> ignore
         Log.Warn (fun () -> L "Replacing connection for %s with a new one!" client.RemoteJid.FullId)
         client
+    let filterConnections filter =
+        let id_inc = "incomming"
+        let id_out = "outgoing"
+        let id_client = "client"
+        let inc = incommingS2sConnections.Values |> Seq.map (fun c -> c, id_inc) 
+        let out = outgoingS2sConnections.Values |> Seq.map (fun c -> c, id_out)
+        let clients = clientConnections.Values |> Seq.collect(fun v -> v.Values) |> Seq.map (fun c -> c, id_client)
+        let rec buildFilter filter =
+           match filter with
+           | IsOutGoingServer -> (fun (c:IXmppClient, t) -> t = id_out)
+           | IsIncommingServer -> (fun (c, t) -> t = id_inc) 
+           | IsClient -> (fun (c, t) -> t = id_client && c.StreamType.OnClientStream)
+           | IsComponent -> (fun (c, t) -> t = id_client && c.StreamType.OnComponentStream)
+           | Advanced f -> (fun (c, _) -> f c)
+           | And (left, right) -> (fun arg -> buildFilter left arg && buildFilter right arg)
+           | Or (left, right) -> (fun arg -> buildFilter left arg || buildFilter right arg)
+        inc
+          |> Seq.append out
+          |> Seq.append clients
+          |> Seq.filter (buildFilter filter)
+          |> Seq.map fst
+          |> Seq.toList
+          |> Seq.ofList
+
     let addClientConnection (jid : JabberId) (xmppClient : IXmppClient) = 
         // Note don't use xmppClient as we are within a context (possibly within the NegotiationComplete event)
         let bareId = jid.BareId
@@ -212,6 +237,9 @@ type ConnectionManager(myDomain : string) as this =
         }
         |> Log.TraceMe
     
+    /// Filter all currently registered and open connections and return the result
+    member __.FilterConnections filter = filterConnections filter
+
     interface IConnectionManager with
         
         [<CLIEventAttribute>]
@@ -227,4 +255,5 @@ type ConnectionManager(myDomain : string) as this =
         member __.RegisterOutgoingConnection _ =
             raise <| System.NotImplementedException("RegisterOutgoingConnection is not implemented.")
         member x.GetConnections jid = x.GetConnections jid
+        member x.FilterConnections filter = x.FilterConnections filter
         member x.Shutdown force = x.Shutdown force

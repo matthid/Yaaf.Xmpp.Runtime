@@ -83,6 +83,7 @@
     <Compile Include="BindParsingTests.fs" />
     <Compile Include="XmppClient.fs" />
     <Compile Include="ComponentNegotation.fs" />
+    <Compile Include="ConnectionManagerTest.fs" />
     <Compile Include="XmppServer.fs" />
     <Compile Include="XmppServerComponent.fs" />
     <Compile Include="SimpleTests.fs" />
