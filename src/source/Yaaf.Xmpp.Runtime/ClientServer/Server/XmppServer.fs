@@ -101,8 +101,9 @@ type XmppServer(c : ServerSetup) as this =
     member x.Components 
       with get () =
         x.ConnectionManager.FilterConnections IsComponent
-        |> List.filter (fun client -> client.ConnectTask.IsCompleted)
-        |> List.map (fun client -> { Name = None; Jid = client.ConnectTask.Result })
+        |> Seq.filter (fun client -> client.ConnectTask.IsCompleted)
+        |> Seq.map (fun client -> { Name = None; Jid = client.ConnectTask.Result })
+        |> Seq.toList
 
     member x.PluginManager = pluginManager
     
