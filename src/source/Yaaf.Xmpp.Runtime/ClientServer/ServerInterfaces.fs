@@ -60,11 +60,21 @@ type IServerRouting =
     // Resove : LocalJid -> Register -> configModifier -> JidToResolve -> Client
     abstract member Resolve : JabberId -> (IXmppClient -> unit) -> JabberId -> Async<IXmppClient>
 
+type ConnectionFilter =
+  | IsOutGoingServer
+  | IsIncommingServer
+  | IsClient
+  | IsComponent
+  | And of ConnectionFilter * ConnectionFilter
+  | Or of ConnectionFilter * ConnectionFilter
+  | Advanced of (IXmppClient -> bool)
+
 type IServerApiConnectionManager = 
     /// Returns an previously registered connection (only outgoing and client connections)
     /// WARNING: Be carefull with the XmppClient instances (possible deadlocks)
     abstract member GetConnections : JabberId -> IXmppClient list
-    
+    /// Filter all registered and open Connections and return the resulting sequence.
+    abstract member FilterConnections : ConnectionFilter -> IXmppClient seq
 
     // it is garantueed that ClientNegotiated or ClientDisconnected is triggered at least once for every RegisterIncommingConnection call
     // ClientDisconnected can be called before ClientNegotiated is called
@@ -108,6 +118,7 @@ type ConfigType =
     | C2SConfig
     | ComponentConfig of bool
 
+[<Obsolete("Use ConnectionManager.FilterConnections to query components instead")>]
 type ConnectedComponent =
   { Name : string option
     Jid : JabberId }
@@ -121,7 +132,8 @@ type IServerApi =
     /// Returns true when the domain part of the jid equals one of the domains handled by the server.
     abstract IsLocalJid : JabberId -> bool
     abstract ConnectionManager : IServerApiConnectionManager with get
-    
+   
+    [<Obsolete("Use ConnectionManager.FilterConnections to query components instead")>] 
     abstract ConnectedComponents : ConnectedComponent list with get
     abstract Domain : string with get
     abstract TcpListeners : System.Net.Sockets.TcpListener list with get

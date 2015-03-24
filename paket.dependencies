@@ -1,10 +1,9 @@
+redirects: on
 source https://nuget.org/api/v2
 
 //Build
 nuget Yaaf.AdvancedBuilding
 nuget NUnit.Runners
-// Until windows support is fixed
-nuget FSharp.Formatting == 2.6.3
 
 // Project
 nuget FSharp.Core

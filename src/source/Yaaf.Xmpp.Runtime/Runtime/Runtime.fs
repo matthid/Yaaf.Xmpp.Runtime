@@ -254,15 +254,16 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                 finishLoop()
             
             //try
-            Log.Info(fun _ -> L "Loop finished trying to write exit")
-            match err with
-            | Some e ->
-                try
-                    do! coreApi.FailwithStream e
-                with :? SendStreamClosedException -> ()
-            | None ->
-                do! coreApi.CloseStream()
-                sendBoxFinished.Set()
+            if not coreApi.IsClosed then
+                Log.Info(fun _ -> L "Loop finished trying to write exit")
+                match err with
+                | Some e ->
+                    try
+                        do! coreApi.FailwithStream e
+                    with :? SendStreamClosedException -> ()
+                | None ->
+                    do! coreApi.CloseStream()
+                    sendBoxFinished.Set()
 
                 //if coreApi.IsClosed && not  then
                 //    sendBox.SendMessages []
@@ -275,7 +276,8 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                 // Shut everything down? (every nice way was done above)
                 // close underlaying stream
                 for stream in coreApi.CoreStreamHistory do
-                    do! stream.CloseStream()
+                    if not stream.IsClosed then
+                        do! stream.CloseStream()
             
             Log.Info(fun _ -> L "XmppRuntime closing task finished with success!")
             return ()

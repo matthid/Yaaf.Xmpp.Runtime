@@ -88,34 +88,29 @@ type XmppServer(c : ServerSetup) as this =
     
     let errors = Event<System.EventHandler<exn>, _>()
     let stopToken = new System.Threading.CancellationTokenSource()
-    let mutable components = []
     do
         connections.Errors |> Event.add (fun e -> errors.Trigger(this, e))
-        connections.ClientNegotiated 
-        |> Event.add (fun client -> 
-            match client.StreamType with
-            | ComponentStream _ -> 
-                components <- { Name = None; Jid = client.RemoteJid } :: components
-            | _ -> ())
-        connections.ClientDisconnected
-        |> Event.add (fun (client, reason) ->
-            match client.StreamType with
-            | ComponentStream _ -> 
-                components <- components |> List.filter (fun cp -> cp.Jid.FullId <> client.RemoteJid.FullId)
-            | _ -> ())
     
     [<CLIEventAttribute>]
     member x.Errors = errors.Publish
     
     member x.Delivery with get () = delivery
     member x.Domain with get () = c.Domain
-    member x.Components with get () = components
     member x.ConnectionManager with get () = connections :> IServerApiConnectionManager
+    [<System.Obsolete("Use ConnectionManager.FilterConnections to query components instead")>]
+    member x.Components 
+      with get () =
+        x.ConnectionManager.FilterConnections IsComponent
+        |> Seq.filter (fun client -> client.ConnectTask.IsCompleted)
+        |> Seq.map (fun client -> { Name = None; Jid = client.ConnectTask.Result })
+        |> Seq.toList
+
     member x.PluginManager = pluginManager
     
     interface IServerApi with
         member x.Delivery with get () = x.Delivery
         member x.IsLocalJid jid = jid.Domainpart = x.Domain
+        [<System.Obsolete("Use ConnectionManager.FilterConnections to query components instead")>]
         member x.ConnectedComponents = x.Components
         member x.TcpListeners = []
         member x.ConnectionManager with get () = x.ConnectionManager
