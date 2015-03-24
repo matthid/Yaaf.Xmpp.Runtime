@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>StanzaError - Yaaf.Xmpp.Runtime</title>
+    <title>ConnectionFilter - Yaaf.Xmpp.Runtime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Matthias Dittrich">
@@ -38,30 +38,30 @@
 
 
 
-<h1>StanzaError </h1>
+<h1>ConnectionFilter </h1>
 <div class="xmldoc">
     Defined in Yaaf.Xmpp.Runtime.dll.
 </div>
 <div class="xmldoc">
 </div>
-  <h3>Instance members</h3>
+  <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '908', 908)" onmouseover="showTip(event, '908', 908)">
-            AsInterface
+          <code onmouseout="hideTip(event, '766', 766)" onmouseover="showTip(event, '766', 766)">
+            Advanced(IXmppClient -&gt; bool)
           </code>
-          <div class="tip" id="908">
-            <strong>Signature:</strong> IStanza<br />
+          <div class="tip" id="766">
+            <strong>Signature:</strong> IXmppClient -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L201-201" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L70-70" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -71,15 +71,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '909', 909)" onmouseover="showTip(event, '909', 909)">
-            BareFrom
+          <code onmouseout="hideTip(event, '767', 767)" onmouseover="showTip(event, '767', 767)">
+            And(ConnectionFilter,ConnectionFilter)
           </code>
-          <div class="tip" id="909">
-            <strong>Signature:</strong> JabberId<br />
+          <div class="tip" id="767">
+            <strong>Signature:</strong> ConnectionFilter * ConnectionFilter<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L180-180" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L68-68" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -89,15 +89,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '910', 910)" onmouseover="showTip(event, '910', 910)">
-            Contents
+          <code onmouseout="hideTip(event, '768', 768)" onmouseover="showTip(event, '768', 768)">
+            IsClient
           </code>
-          <div class="tip" id="910">
-            <strong>Signature:</strong> StanzaContents<br />
+          <div class="tip" id="768">
+            <strong>Signature:</strong> <br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L165-165" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L66-66" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -107,15 +107,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '911', 911)" onmouseover="showTip(event, '911', 911)">
-            Data
+          <code onmouseout="hideTip(event, '769', 769)" onmouseover="showTip(event, '769', 769)">
+            IsComponent
           </code>
-          <div class="tip" id="911">
-            <strong>Signature:</strong> StanzaErrorData<br />
+          <div class="tip" id="769">
+            <strong>Signature:</strong> <br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L166-166" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L67-67" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -125,15 +125,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
-            Header
+          <code onmouseout="hideTip(event, '770', 770)" onmouseover="showTip(event, '770', 770)">
+            IsIncommingServer
           </code>
-          <div class="tip" id="912">
-            <strong>Signature:</strong> StanzaHeader<br />
+          <div class="tip" id="770">
+            <strong>Signature:</strong> <br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L164-164" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L65-65" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -143,15 +143,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
-            SimpleStanza
+          <code onmouseout="hideTip(event, '771', 771)" onmouseover="showTip(event, '771', 771)">
+            IsOutGoingServer
           </code>
-          <div class="tip" id="913">
-            <strong>Signature:</strong> Stanza<br />
+          <div class="tip" id="771">
+            <strong>Signature:</strong> <br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/XmlStanzaParsing.fs#L163-163" class="github-link">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L64-64" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '772', 772)" onmouseover="showTip(event, '772', 772)">
+            Or(ConnectionFilter,ConnectionFilter)
+          </code>
+          <div class="tip" id="772">
+            <strong>Signature:</strong> ConnectionFilter * ConnectionFilter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/matthid//blob/master/src/source/Yaaf.Xmpp.Runtime/ClientServer/ServerInterfaces.fs#L69-69" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
