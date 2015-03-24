@@ -1,4 +1,8 @@
-﻿### 0.0.5
+﻿### 0.0.6
+
+ * Duplication of connected components.
+
+### 0.0.5
 
  * Cleanup/Dispose IXmppClient in Connection manager.
 
