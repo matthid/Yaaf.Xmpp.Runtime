@@ -19,8 +19,7 @@ type KeyValuePair<'k, 'v> = System.Collections.Generic.KeyValuePair<'k, 'v>
 /// because this would result in a deadlock
 type ConnectionManager(myDomain : string) as this = 
     let preNegJid = JabberId.Parse("__pre-negotiation__@" + myDomain)
-    let incommingS2sConnections = new ConcurrentDictionary<string, IXmppClient>()
-    let outgoingS2sConnections = new ConcurrentDictionary<string, IXmppClient>()
+    let s2sConnections = new ConcurrentDictionary<string, IXmppClient>()
     let clientConnections = new ConcurrentDictionary<string, ConcurrentDictionary<string, IXmppClient>>()
     let pendingConnections = new ConcurrentDictionary<IXmppClient, IXmppClient>()
     let errors = Event<System.EventHandler<exn>, _>()
@@ -36,23 +35,24 @@ type ConnectionManager(myDomain : string) as this =
         Log.Warn (fun () -> L "Replacing connection for %s with a new one!" client.RemoteJid.FullId)
         client
     let filterConnections filter =
-        let id_inc = "incomming"
-        let id_out = "outgoing"
+        //let id_inc = "incomming"
+        let id_server = "server"
         let id_client = "client"
-        let inc = incommingS2sConnections.Values |> Seq.map (fun c -> c, id_inc) 
-        let out = outgoingS2sConnections.Values |> Seq.map (fun c -> c, id_out)
+        let servers = s2sConnections.Values |> Seq.map (fun c -> c, id_server) 
+        //let out = outgoingS2sConnections.Values |> Seq.map (fun c -> c, id_out)
         let clients = clientConnections.Values |> Seq.collect(fun v -> v.Values) |> Seq.map (fun c -> c, id_client)
         let rec buildFilter filter =
            match filter with
-           | IsOutGoingServer -> (fun (c:IXmppClient, t) -> t = id_out)
-           | IsIncommingServer -> (fun (c, t) -> t = id_inc) 
+           | IsServer -> (fun (c:IXmppClient, t) -> t = id_server)
+           //| IsIncommingServer -> (fun (c, t) -> t = id_server) 
            | IsClient -> (fun (c, t) -> t = id_client && c.StreamType.OnClientStream)
-           | IsComponent -> (fun (c, t) -> t = id_client && c.StreamType.OnComponentStream)
+           | IsComponent -> (fun (c, t) -> (t = id_server) && c.StreamType.OnComponentStream)
            | Advanced f -> (fun (c, _) -> f c)
+           | Not (inner) -> (fun arg -> not <| buildFilter inner arg)
            | And (left, right) -> (fun arg -> buildFilter left arg && buildFilter right arg)
            | Or (left, right) -> (fun arg -> buildFilter left arg || buildFilter right arg)
-        inc
-          |> Seq.append out
+        servers
+          //|> Seq.append out
           |> Seq.append clients
           |> Seq.filter (buildFilter filter)
           |> Seq.map fst
@@ -71,7 +71,7 @@ type ConnectionManager(myDomain : string) as this =
     
     let addServerConnection (jid : JabberId) (xmppClient : IXmppClient) = 
         let bareId = jid.BareId
-        outgoingS2sConnections.AddOrUpdate(bareId, xmppClient, fun _ c -> closeOldWithConflict c xmppClient) |> ignore
+        s2sConnections.AddOrUpdate(bareId, xmppClient, fun _ c -> closeOldWithConflict c xmppClient) |> ignore
     
     let addConnection (streamType : StreamType) (jid : JabberId) (xmppClient : IXmppClient)  = 
         (if streamType.OnClientStream then addClientConnection
@@ -126,7 +126,7 @@ type ConnectionManager(myDomain : string) as this =
                             clientDisconnected.Trigger(this, (xmppClient, res))
                         | _ -> ()
                     else 
-                        match incommingS2sConnections.TryRemove(bareId, xmppClient) with
+                        match s2sConnections.TryRemove(bareId, xmppClient) with
                         | true -> 
                             Log.Info(fun () -> L "removed s2s or component connection")
                             clientDisconnected.Trigger(this, (xmppClient, res))
@@ -202,7 +202,7 @@ type ConnectionManager(myDomain : string) as this =
                 else cons |> List.filter (fun con -> con.RemoteJid.Resource.Value = jid.Resource.Value)
             else 
                 //failwith "outgoing currently not supported"
-                match outgoingS2sConnections.TryGetValue(bareId) with
+                match s2sConnections.TryGetValue(bareId) with
                 | true, s when s.NegotiationCompleted -> [ s ]
                 | _ -> []
         Log.Verb(fun () -> L "GetConnections of %A (isLocal: %O). found %A." bareId isLocal (results |> Seq.map (fun c -> c.RemoteJid)))
@@ -228,8 +228,8 @@ type ConnectionManager(myDomain : string) as this =
                 clientConnections
                 |> Seq.map (fun k -> k.Value |> Seq.map getCloseTask)
                 |> Seq.concat
-                |> Seq.append (incommingS2sConnections |> Seq.map getCloseTask)
-                |> Seq.append (outgoingS2sConnections |> Seq.map getCloseTask)
+                //|> Seq.append (incommingS2sConnections |> Seq.map getCloseTask)
+                |> Seq.append (s2sConnections |> Seq.map getCloseTask)
                 |> Seq.append (pendingConnections |> Seq.map getCloseTask)
             let! res = Task.WhenAll(closeTasks)
             ignore res
