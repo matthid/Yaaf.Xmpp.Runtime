@@ -1,4 +1,8 @@
-﻿### 0.0.6
+﻿### 0.0.7
+
+ * Fix FilterConnections not working with IsComponent.
+
+### 0.0.6
 
  * Duplication of connected components.
 
