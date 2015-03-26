@@ -61,10 +61,11 @@ type IServerRouting =
     abstract member Resolve : JabberId -> (IXmppClient -> unit) -> JabberId -> Async<IXmppClient>
 
 type ConnectionFilter =
-  | IsOutGoingServer
-  | IsIncommingServer
+  //| IsOutGoingServer
+  | IsServer
   | IsClient
   | IsComponent
+  | Not of ConnectionFilter 
   | And of ConnectionFilter * ConnectionFilter
   | Or of ConnectionFilter * ConnectionFilter
   | Advanced of (IXmppClient -> bool)

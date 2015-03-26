@@ -28,5 +28,55 @@ open Foq
 open Swensen.Unquote
 
 [<TestFixture>]
-type ``Test-Yaaf-Xmpp-Server-ConnetionManager: Check that the plugin works properly``() =
+type ``Test-Yaaf-Xmpp-Server-ConnetionManager: Check that the ConnectionManager works properly``() =
     inherit MyTestClass()
+    let refreshTime = 50
+    let waitRefresh () = System.Threading.Thread.Sleep refreshTime
+    [<Test>]
+    member x.``Test that component connections are shown`` () =
+      let mgr = new ConnectionManager("yaaf.de")
+      let cancel = new TaskCompletionSource<_>()
+      let acceptComponent = 
+        Mock<IXmppClient>()
+          .Setup(fun c -> <@ c.ConnectTask @>).Returns(Task.FromResult (JabberId.Parse "component.yaaf.de"))
+          .Setup(fun c -> <@ c.StreamType @>).Returns(StreamType.ComponentStream true)
+          .Setup(fun c -> <@ c.Exited @>).Returns(cancel.Task)
+          .Setup(fun c -> <@ c.CloseConnection(any()) @>).Calls<bool>(fun force -> cancel.SetResult None; Task.FromResult ())
+          .Create()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.isEmpty @>
+      mgr.RegisterIncommingConnection(acceptComponent)
+      waitRefresh()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.toList = [ acceptComponent ] @>
+      cancel.SetResult None
+      waitRefresh()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.isEmpty @>
+     
+      let cancel = new TaskCompletionSource<_>() 
+      let outgoingComponent = 
+        Mock<IXmppClient>()
+          .Setup(fun c -> <@ c.ConnectTask @>).Returns(Task.FromResult (JabberId.Parse "component2.yaaf.de"))
+          .Setup(fun c -> <@ c.StreamType @>).Returns(StreamType.ComponentStream false)
+          .Setup(fun c -> <@ c.Exited @>).Returns(cancel.Task)
+          .Setup(fun c -> <@ c.CloseConnection(any()) @>).Calls<bool>(fun force -> cancel.SetResult None; Task.FromResult ())
+          .Create()
+          
+      mgr.RegisterIncommingConnection(outgoingComponent)
+      
+      waitRefresh()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.toList = [ outgoingComponent ] @>
+      
+      let acceptComponent = 
+        Mock<IXmppClient>()
+          .Setup(fun c -> <@ c.ConnectTask @>).Returns(Task.FromResult (JabberId.Parse "component.yaaf.de"))
+          .Setup(fun c -> <@ c.StreamType @>).Returns(StreamType.ComponentStream true)
+          .Setup(fun c -> <@ c.Exited @>).Returns(cancel.Task)
+          .Setup(fun c -> <@ c.CloseConnection(any()) @>).Calls<bool>(fun force -> cancel.SetResult None; Task.FromResult ())
+          .Create()
+      
+      mgr.RegisterIncommingConnection(acceptComponent)
+      waitRefresh()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.toList = [ acceptComponent; outgoingComponent ] @>
+      
+      cancel.SetResult None
+      waitRefresh()
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.isEmpty @>
