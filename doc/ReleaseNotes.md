@@ -1,4 +1,8 @@
-﻿### 0.0.7
+﻿### 0.0.8
+
+ * Support for stream level namespaces (as used by Server Dialback).
+
+### 0.0.7
 
  * Fix FilterConnections not working with IsComponent.
 

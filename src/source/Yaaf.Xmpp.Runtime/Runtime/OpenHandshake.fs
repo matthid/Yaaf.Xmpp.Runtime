@@ -5,6 +5,7 @@
 module Yaaf.Xmpp.Runtime.OpenHandshake
 
 open System
+open System.Collections.Generic
 open System.IO
 open Yaaf.Xml
 open System.Xml.Linq
@@ -15,20 +16,56 @@ open Yaaf.Helper
 open Yaaf.IO
 open Yaaf.Xmpp
 
+/// A helper type to provide structural comparison
+type internal StreamOpenInfoEqualityHelper = 
+    { From : JabberId option
+      To : JabberId option
+      Id : string option
+      Version : Version option
+      DeclaredNamespaces : (string * string) list
+      DefaultNamespace : string option }
+
+[<CustomEquality; CustomComparison>]
 type StreamOpenInfo = 
     { From : JabberId option
       To : JabberId option
       Id : string option
       /// Note that only Major and Minor are supported
       Version : Version option
-      StreamNamespace : string option }
-    
+      /// A namespace -> prefix mapping, can be used for lookup to namespaces (eg Server Dialback discovery)
+      DeclaredNamespaces : IDictionary<string, string>
+      DefaultNamespace : string option }
+    member internal x.AsEqualityHelper =
+      { From = x.From
+        To = x.To
+        Id = x.Id
+        Version = x.Version
+        DeclaredNamespaces =
+          x.DeclaredNamespaces
+          |> Seq.map (fun kv -> kv.Key, kv.Value)
+          |> Seq.sortBy (fun (ns,prefix) -> ns)
+          |> Seq.toList
+        DefaultNamespace = x.DefaultNamespace } : StreamOpenInfoEqualityHelper 
+    override x.Equals(y) =
+        match y with
+        | :? StreamOpenInfo as other -> (x.AsEqualityHelper = other.AsEqualityHelper)
+        | _ -> false
+    interface IComparable with
+      member x.CompareTo y =
+        match y with
+        | :? StreamOpenInfo as other -> compare x.AsEqualityHelper other.AsEqualityHelper
+        | _ -> failwith "expected a StreamOpenInfo instance in CompareTo" 
+    override x.GetHashCode() = hash x.AsEqualityHelper
+    /// returns DefaultNamespace
+    member x.StreamNamespace = x.DefaultNamespace
     static member Empty = 
         { From = None
           To = None
           Id = None
           Version = None
-          StreamNamespace = Some KnownStreamNamespaces.clientNS }
+          DeclaredNamespaces =
+            [ KnownStreamNamespaces.streamNS, "stream" ] |> dict
+          DefaultNamespace = Some KnownStreamNamespaces.clientNS }
     
     member x.ResolvedVersion 
         with get () = 
@@ -40,7 +77,8 @@ let fromOpenInfo (info : StreamOpenInfo) =
     //do! writer.WriteStartDocumentAsync() |> Task.ofPlainTask
     //do! writer.WriteStartElementAsync("stream", "stream", streamNS) |> Task.ofPlainTask
     let openElem = new XElement(XName.Get("stream", KnownStreamNamespaces.streamNS))
-    openElem.Add(XAttribute(XName.Get("stream", xmlnsPrefix), KnownStreamNamespaces.streamNS))
+    for ns, prefix in info.DeclaredNamespaces |> Seq.map (fun kv -> kv.Key, kv.Value) do
+      openElem.Add(XAttribute(XName.Get(prefix, xmlnsPrefix), ns))
 
     match info.From with
     | Some from -> 
@@ -93,7 +131,13 @@ let toOpenInfo (streamElem : XElement) =
             attrs
             |> Map.tryFind "version"
             |> Option.map System.Version.Parse
-        StreamNamespace = 
+        DeclaredNamespaces = 
+            streamElem.Attributes()
+            |> Seq.filter(fun a -> a.Name.NamespaceName = xmlnsPrefix)
+            |> Seq.filter (fun a -> a.Name.LocalName <> "xmlns")
+            |> Seq.map (fun a -> a.Value, a.Name.LocalName)
+            |> dict
+        DefaultNamespace = 
             attrs
             |> Map.tryFind "xmlns" }
 
@@ -145,11 +189,15 @@ type OpenHandShakeInfo =
         StreamId : string
     }
  
-let doHandshake (config : IRuntimeConfig) (stream : IXmlStream) = 
+let doHandshake namespaces (config : IRuntimeConfig) (stream : IXmlStream) = 
     async { 
         //let config = context.Permanent.Config
         if (config.IsInitializing && config.RemoteJabberId.IsNone) then 
             raise <| ConfigurationException "Configuration Error: RemoteJabberId can not be none when we are the initalizing entity"
+        let namspaces =
+          if namespaces |> Seq.exists (fun (prefix,ns) -> ns = KnownStreamNamespaces.streamNS) then
+            namespaces
+          else ("stream", KnownStreamNamespaces.streamNS) :: namespaces 
         //context.RemoveAll()
         //context.StreamBackend <- stream
         let openInfo = 
@@ -172,7 +220,11 @@ let doHandshake (config : IRuntimeConfig) (stream : IXmlStream) =
               Version = 
                   // 4.7.5. version
                   Some(System.Version(1, 0, 0, 0))
-              StreamNamespace = Some config.StreamType.StreamNamespace }
+              DeclaredNamespaces =
+                  namespaces
+                  |> Seq.map (fun (prefix, ns) -> ns, prefix)
+                  |> dict
+              DefaultNamespace = Some config.StreamType.StreamNamespace }
         let! remoteOpenInfo = openHandshake config openInfo stream
         let streamId =
             if config.IsServerSide then openInfo.Id.Value else remoteOpenInfo.Id.Value
@@ -191,23 +243,30 @@ let doHandshake (config : IRuntimeConfig) (stream : IXmlStream) =
 
 type ICoreStreamOpenerService = 
     abstract Info : OpenHandShakeInfo with get
+    abstract RegisterNamespace : prefix:string * ns:string -> unit
 
 // Nobody should ever use this type directly (only the interface above). 
 // This makes sure we can replace this in unit tests.
 // This makes also sure that we can build custom Opener which provide the same information without breaking plugins.
 type internal XmppCoreStreamOpener (config : IRuntimeConfig) =
     let mutable info = None
+    let nss = new System.Collections.Concurrent.ConcurrentDictionary<string, string>()
     interface ICoreStreamOpenerService with
         member x.Info = 
             match info with
             | Some i -> i
             | None -> invalidOp "The stream has to be opened for the info to be available"
-
+        member x.RegisterNamespace (prefix, ns) =
+            if String.IsNullOrWhiteSpace prefix then invalidArg "prefix" "cannot register an empty prefix"
+            match info with
+            | Some _ -> invalidOp "the stream is already open"
+            | None -> nss.AddOrUpdate(prefix, ns, (fun _ _ -> failwith "the same prefix was already registered")) |> ignore
     interface IInternalStreamOpener with
         member x.PluginService = Service.FromInstance<ICoreStreamOpenerService, _> x
         member x.OpenStream stream =
             async {
-                let! res = doHandshake config stream
+                let namespaces = nss |> Seq.map (fun kv -> kv.Key, kv.Value) |> Seq.toList
+                let! res = doHandshake namespaces config stream
                 // Provide API for the gathered info.
                 info <- Some res
                 return ()

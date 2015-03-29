@@ -296,7 +296,12 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
         let kernel = setup.Kernel
         let runtimeConfig = kernel.Get<IRuntimeConfig>()
         let stream = kernel.Get<IStreamManager>()
-        let runtime = new XmppRuntime(new CoreStreamApi(new OpenHandshake.XmppCoreStreamOpener(runtimeConfig)), runtimeConfig, kernel)
+        let core = 
+          match kernel.TryGet<ICoreStreamApi>() with
+          | Some c -> c
+          | None -> new CoreStreamApi(new OpenHandshake.XmppCoreStreamOpener(runtimeConfig)) :> _
+
+        let runtime = new XmppRuntime(core, runtimeConfig, kernel)
         setup.InitRuntime runtime
         let task = runtime.Connect(stream)
         let client = new XmppClient(runtime, task)
