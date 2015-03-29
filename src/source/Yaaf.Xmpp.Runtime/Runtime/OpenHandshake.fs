@@ -29,6 +29,7 @@ type internal StreamOpenInfoEqualityHelper =
 type StreamOpenInfo = 
     { From : JabberId option
       To : JabberId option
+      /// http://xmpp.org/rfcs/rfc6120.html#streams-attr-id
       Id : string option
       /// Note that only Major and Minor are supported
       Version : Version option
@@ -188,7 +189,24 @@ type OpenHandShakeInfo =
         RemoteOpenInfo : StreamOpenInfo
         StreamId : string
     }
- 
+
+module GetKeyHelper =
+  open System.Security.Cryptography
+  open System.Text
+  open System
+
+  // from http://stackoverflow.com/a/1344255/1269722
+  let private chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray()
+  let generateKey len =
+    let data = Array.zeroCreate (4 * len)
+    ( use crypto = new RNGCryptoServiceProvider()
+      crypto.GetBytes(data))
+    let builder = new StringBuilder(len)
+    for i in 0..len-1 do
+      builder.Append(chars.[int (BitConverter.ToUInt32(data, 4 * i) % uint32 chars.Length)])
+      |> ignore
+    builder.ToString()
+
 let doHandshake namespaces (config : IRuntimeConfig) (stream : IXmlStream) = 
     async { 
         //let config = context.Permanent.Config
@@ -216,7 +234,7 @@ let doHandshake namespaces (config : IRuntimeConfig) (stream : IXmlStream) =
               Id = 
                   // 4.7.3. id 
                   if config.IsInitializing then None
-                  else System.Guid.NewGuid().ToString() |> Some
+                  else GetKeyHelper.generateKey 30 |> Some
               Version = 
                   // 4.7.5. version
                   Some(System.Version(1, 0, 0, 0))
@@ -227,7 +245,7 @@ let doHandshake namespaces (config : IRuntimeConfig) (stream : IXmlStream) =
               DefaultNamespace = Some config.StreamType.StreamNamespace }
         let! remoteOpenInfo = openHandshake config openInfo stream
         let streamId =
-            if config.IsServerSide then openInfo.Id.Value else remoteOpenInfo.Id.Value
+            if config.IsInitializing then remoteOpenInfo.Id.Value else openInfo.Id.Value
         return 
             {
                 OpenInfo = openInfo
