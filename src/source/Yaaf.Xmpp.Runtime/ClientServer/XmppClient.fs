@@ -9,6 +9,7 @@ open Yaaf.Sasl
 open Yaaf.Helper
 open Yaaf.IO
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 
 type AdvancedConnectInfo = 
@@ -72,6 +73,7 @@ open Yaaf.Sasl
 open Yaaf.Helper
 open Yaaf.IO
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 open Yaaf.Xmpp.Runtime
 open Yaaf.Xmpp.Runtime.Features

@@ -40,7 +40,6 @@ namespace Yaaf.Xmpp.Runtime
     /// </summary>
     /// <typeparam name="TPlugin"></typeparam>
 	public interface IPluginManager<TPlugin> {
-
 		/// <summary>
 		/// Try to not use this member, because if you do its your responsibility that the plugin is initialized with the proper service instances!
 		/// Use the generic version of this method instead to get automatic service resolution!
@@ -67,7 +66,7 @@ namespace Yaaf.Xmpp.Runtime
 	}
 
 	/// <summary>
-	/// Most of the Plugins will require a plugin manager (ie to use API provided by other plugins
+	/// A PluginManager where every plugin is a ServiceProvider.
 	/// </summary>
 	public interface IServicePluginManager<TPlugin> : IPluginManager<TPlugin> where TPlugin : class, IPluginServiceProvider {
 		/// <summary>
@@ -75,8 +74,7 @@ namespace Yaaf.Xmpp.Runtime
 		/// If your plugin has custom initialisation parameters just setup the Ninject kernel before calling this method.
 		/// NOTE: all Runtime specific services are already setup! (like ILocalDelivery or ICoreRuntimeApi for example, note also that you even can get the IKernel instance!)
 		/// </summary>
-		void RegisterPlugin<T> () where T : class, TPlugin;
-
+		void RegisterPlugin<T> () where T : class, TPlugin; // Not in IPluginManager because we cannot assume that we can create instances.
 
 		///// <summary>
 		///// Try to not use this member, because if you do its your responsibility that the plugin is initialized with the proper service instances!

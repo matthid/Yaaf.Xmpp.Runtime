@@ -11,6 +11,7 @@ open FsUnit
 open NUnit.Framework
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 [<AutoOpen>]
 module TaskTestHelper =
@@ -30,8 +31,8 @@ module TaskTestHelper =
             let agg = agg.Flatten()
             for i in 0..agg.InnerExceptions.Count - 1 do
                 Log.Err(fun () -> L "Exception in Task: %O" (agg.InnerExceptions.Item i))
-            reraisePreserveStackTrace <| if agg.InnerExceptions.Count = 1 then agg.InnerExceptions.Item 0
-                                         else agg :> exn
+            Task.reraise <| if agg.InnerExceptions.Count = 1 then agg.InnerExceptions.Item 0
+                            else agg :> exn
         t.Result
 
     let mutable defaultTimeout = 

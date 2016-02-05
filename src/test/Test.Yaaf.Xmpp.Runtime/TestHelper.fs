@@ -13,6 +13,7 @@ open NUnit.Framework
 open FsUnit
 
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xml
 open Yaaf.IO
 open Yaaf.Xmpp

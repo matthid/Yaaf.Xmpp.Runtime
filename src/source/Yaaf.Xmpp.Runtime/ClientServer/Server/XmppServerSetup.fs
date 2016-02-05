@@ -7,6 +7,7 @@ namespace Yaaf.Xmpp.Server
 open Yaaf.DependencyInjection
 
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 open Yaaf.Xmpp
 open Yaaf.Xmpp.Setup

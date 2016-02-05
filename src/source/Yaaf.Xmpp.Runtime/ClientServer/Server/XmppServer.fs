@@ -8,6 +8,7 @@ open Yaaf.DependencyInjection
 open Yaaf.FSharp.Control
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xmpp
 open Yaaf.Xmpp
 open Yaaf.Xmpp.Setup
@@ -185,7 +186,7 @@ type XmppServerExtensions =
                     Log.Info(fun _ -> L "Finished Listening on %A for %A connections" endpoint streamType)
                 with exn -> 
                     Log.Crit(fun _ -> L "Listener Loop failed!: %A" exn)
-                    reraisePreserveStackTrace exn
+                    Task.reraise exn
             }
             |> Log.TraceMe
         Async.StartAsTaskImmediate(listenAsync, cancellationToken = x.CancelToken)

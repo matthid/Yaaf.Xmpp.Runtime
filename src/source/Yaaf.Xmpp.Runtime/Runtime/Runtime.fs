@@ -8,6 +8,7 @@ open Yaaf.DependencyInjection
 //open Yaaf.DependencyInjection.Ninject
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xmpp
 open Yaaf.FSharp.Control
 
@@ -39,7 +40,7 @@ type SendQueueBox (sendAction) =
                                     reply.Reply ()
                         with exn ->
                             errorTask.TrySetResult exn |> ignore
-                            reraisePreserveStackTrace exn
+                            Task.reraise exn
                         return ()
                 })
     do
@@ -213,14 +214,14 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                 // we have to close the stream
                 try do! coreApi.FailwithStream error
                 with e -> Log.Warn(fun _ -> L "Error in FailwithStream: %O" e)
-                reraisePreserveStackTrace (error :> exn)
+                Task.reraise (error :> exn)
             | :? StreamNormalFinishedException as f -> 
                 do! coreApi.CloseStream()
             | :? StreamFinishedException as f -> 
                 // The other side closed the stream already, so close it
                 try do! coreApi.CloseStream()
                 with e -> Log.Warn(fun _ -> L "Error in CloseStream: %O" e)
-                reraisePreserveStackTrace (f:> exn)
+                Task.reraise (f:> exn)
             | exn -> 
                 // tell the other side we failed :(
                 // we log this exception in case the Failwith call fails again...
@@ -229,7 +230,7 @@ type XmppRuntime(coreApi : ICoreStreamApi, config : IRuntimeConfig, kernel : IKe
                 with 
                 | :? SendStreamClosedException -> ()
                 | e -> Log.Warn(fun _ -> L "Error in FailwithStream: %O" e)
-                reraisePreserveStackTrace exn
+                Task.reraise exn
          } |> Log.TraceMeAs "XmppRuntime-Loop"
     let handleConnection (prim:IStreamManager) =
         if prim.IsClosed then

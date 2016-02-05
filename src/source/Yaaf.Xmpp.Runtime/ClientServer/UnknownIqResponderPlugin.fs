@@ -11,6 +11,7 @@ open Yaaf.Xmpp.Runtime
 open Yaaf.Xmpp.Runtime.OpenHandshake
 open Yaaf.Xmpp.XmlStanzas
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 /// Plugin which handles unknown iq stanzas
 type UnknownIqResponderPlugin

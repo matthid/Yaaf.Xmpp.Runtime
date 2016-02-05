@@ -8,6 +8,7 @@ open System.Net
 open System.Net.Sockets
 open System.Threading.Tasks
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Helper
 open Yaaf.Xmpp
 open Yaaf.Xmpp.XmlStanzas

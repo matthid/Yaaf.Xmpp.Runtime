@@ -6,6 +6,7 @@ namespace Yaaf.Xmpp
 
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xmpp.Runtime
 open Yaaf.Xmpp.XmlStanzas
 open Yaaf.Xmpp.XmlStanzas.Parsing

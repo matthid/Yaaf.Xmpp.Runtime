@@ -14,6 +14,7 @@ open Yaaf.Xmpp.StreamHelpers
 
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xml
 
 module IOStreamHelpers =

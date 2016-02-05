@@ -11,6 +11,7 @@ open Yaaf.Logging
 open Yaaf.Sasl
 open Yaaf.Xmpp
 open Yaaf.Xmpp.Runtime
+open Yaaf.Logging.AsyncTracing
 
 module SaslParsing = 
     open System

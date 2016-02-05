@@ -10,6 +10,7 @@ open Mono.System.Xml
 open System.Xml.Linq
 open System.IO
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xml
 open Yaaf.Xmpp.Runtime
 open Yaaf.Helper

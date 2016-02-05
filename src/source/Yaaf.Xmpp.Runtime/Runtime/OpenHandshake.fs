@@ -12,6 +12,7 @@ open System.Xml.Linq
 open System.Threading.Tasks
 open Yaaf.FSharp.Control
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Helper
 open Yaaf.IO
 open Yaaf.Xmpp

@@ -16,6 +16,7 @@ open FSharpx.Collections
 
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 
 let xmlNs = "http://www.w3.org/XML/1998/namespace"
 let xmlnsPrefix = "http://www.w3.org/2000/xmlns/"

@@ -7,6 +7,7 @@ open Yaaf.FSharp.Control
 open Yaaf.Xmpp
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.TestHelper
 open Yaaf.Xmpp.XmlStanzas
 open System.Threading.Tasks

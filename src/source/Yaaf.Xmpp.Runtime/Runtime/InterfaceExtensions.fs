@@ -8,6 +8,7 @@ module Yaaf.Xmpp.Runtime.InterfaceExtensions
 open Yaaf.Helper
 open Yaaf.Xmpp
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.FSharp.Control
 open Yaaf.DependencyInjection
 open System.Threading.Tasks

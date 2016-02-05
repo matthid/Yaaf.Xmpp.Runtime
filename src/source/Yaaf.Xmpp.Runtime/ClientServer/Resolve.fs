@@ -14,6 +14,7 @@ open DnDns.Security
 open System.Net
 open System.Net.Sockets
 open Yaaf.Helper
+open Yaaf.Logging.AsyncTracing
 
 let resolveHostname service port hostname = 
     let request = new DnsQueryRequest()

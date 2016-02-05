@@ -11,6 +11,7 @@ open Yaaf.Logging
 open Yaaf.Helper
 open Yaaf.Xmpp
 open Yaaf.Xmpp.Runtime
+open Yaaf.Logging.AsyncTracing
 
 type KeyValuePair<'k, 'v> = System.Collections.Generic.KeyValuePair<'k, 'v>
 

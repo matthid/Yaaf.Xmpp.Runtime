@@ -8,6 +8,7 @@ open Yaaf.FSharp.Control
 open System.Collections.Concurrent
 open Yaaf.Helper
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xmpp
 open Yaaf.Xmpp.XmlStanzas
 

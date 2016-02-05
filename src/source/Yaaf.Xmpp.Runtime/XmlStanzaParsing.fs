@@ -11,6 +11,7 @@ open System.Xml.Linq
 open Yaaf.Helper
 open Yaaf.IO
 open Yaaf.Logging
+open Yaaf.Logging.AsyncTracing
 open Yaaf.Xmpp
 
 type XmlStanzaType = 
