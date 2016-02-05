@@ -13,8 +13,7 @@ nuget Yaaf.DependencyInjection
 nuget Yaaf.DependencyInjection.SimpleInjector
 
 // Test
-// Until Visual Studio test runner supports later versions.
-nuget NUnit == 2.6.3
+nuget NUnit
 nuget Unquote
 nuget Foq content: none
 nuget FsUnit
