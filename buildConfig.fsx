@@ -50,6 +50,7 @@ let buildConfig =
               ReleaseNotes = toLines release.Notes
               Dependencies = 
                 [ "Yaaf.FSharp.Helper"
+                  "Yaaf.Xmpp.Data"
                   "Yaaf.DependencyInjection"
                   "Yaaf.DependencyInjection.SimpleInjector"
                   "FSharp.Core"
