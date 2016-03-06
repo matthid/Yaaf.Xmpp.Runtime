@@ -12,7 +12,7 @@ open System.Xml.Linq
 
 open Yaaf.Helper
 open Yaaf.FSharp.Control
-open FSharpx.Collections
+open Yaaf.FSharp.Collections
 
 open Yaaf.Helper
 open Yaaf.Logging

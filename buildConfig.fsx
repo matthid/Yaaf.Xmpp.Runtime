@@ -53,7 +53,8 @@ let buildConfig =
                   "Yaaf.DependencyInjection"
                   "Yaaf.DependencyInjection.SimpleInjector"
                   "FSharp.Core"
-                  "Yaaf.Sasl" ] |> List.map (fun name -> name, (GetPackageVersion "packages" name)) }) ]
+                  "Yaaf.Sasl" ] 
+                |> List.map (fun name -> name, (GetPackageVersion "packages" name)) }) ]
     UseNuget = false
     SetAssemblyFileVersions = (fun config ->
       let info =

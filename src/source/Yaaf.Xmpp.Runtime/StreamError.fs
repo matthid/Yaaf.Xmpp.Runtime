@@ -15,7 +15,7 @@ module KnownStreamNamespaces =
 
 namespace Yaaf.Xmpp.Runtime
 
-open FSharpx.Collections
+open Yaaf.FSharp.Collections
 open System
 open System.Xml.Linq
 open Yaaf.Xml

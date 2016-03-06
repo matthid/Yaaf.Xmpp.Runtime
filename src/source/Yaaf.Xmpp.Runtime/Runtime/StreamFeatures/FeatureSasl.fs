@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 namespace Yaaf.Xmpp.Runtime.Features
 
-open FSharpx.Collections
+open Yaaf.FSharp.Collections
 
 open Yaaf.Helper
 open Yaaf.Logging

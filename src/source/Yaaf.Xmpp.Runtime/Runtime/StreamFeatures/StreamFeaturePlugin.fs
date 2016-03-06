@@ -5,7 +5,7 @@
 namespace Yaaf.Xmpp.Runtime.Features
 
 open Yaaf.FSharp.Control
-open FSharpx.Collections
+open Yaaf.FSharp.Collections
 open System.Collections.Generic
 open System.Xml.Linq
 open Yaaf.Helper

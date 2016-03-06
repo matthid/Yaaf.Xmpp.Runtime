@@ -149,7 +149,7 @@ type CoreStreamApi(opener : IInternalStreamOpener) =
     interface ICoreStreamApi with
         member x.PluginService = 
             let openerServices = opener.PluginService
-            if openerServices = null then Service.None else openerServices
+            if isNull openerServices then Service.None else openerServices
 
         member x.SetCoreStream prim = setCoreStream prim
         member x.CoreStreamHistory = history

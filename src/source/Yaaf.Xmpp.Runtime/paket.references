@@ -3,3 +3,4 @@ Yaaf.Sasl
 Yaaf.DependencyInjection
 Yaaf.DependencyInjection.SimpleInjector
 FSharp.Core
+Yaaf.Xmpp.Data

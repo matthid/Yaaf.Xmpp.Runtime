@@ -356,6 +356,7 @@ let rec private publish parameters =
     tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKey parameters.AccessKey args)
         (FullName parameters.WorkingDir) parameters.PublishTrials
     try
+      try
         let result =
             ExecProcess (fun info ->
                 info.FileName <- parameters.ToolPath
@@ -363,21 +364,28 @@ let rec private publish parameters =
                 info.Arguments <- args) parameters.TimeOut
         enableProcessTracing <- tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
-    with exn ->
-        if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
+        true
+      with exn ->
+        let existsError = exn.Message.Contains("already exists and cannot be modified")
+        if existsError then
+          trace exn.Message
+          false
         else
-          (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
-           else exn.Message)
-          |> replaceAccessKey parameters.AccessKey
-          |> failwith
-    traceEndTask "MyNuGetPublish" nuspec
+          if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
+          else
+            (if not (isNull exn.InnerException) then exn.Message + "\r\n" + exn.InnerException.Message
+             else exn.Message)
+            |> replaceAccessKey parameters.AccessKey
+            |> failwith
+    finally
+      traceEndTask "MyNuGetPublish" nuspec
 
-let packSetup config p =
+let packSetup version config p =
   { p with
       Authors = config.ProjectAuthors
       Project = config.ProjectName
       Summary = config.ProjectSummary
-      Version = config.Version
+      Version = if isNull version then config.Version else version
       Description = config.ProjectDescription
       Tags = config.NugetTags
       WorkingDir = "."
@@ -388,17 +396,28 @@ let packSetup config p =
 
 MyTarget "NuGetPack" (fun _ ->
     ensureDirectory config.OutNugetDir
-    for (nuspecFile, settingsFunc) in config.NugetPackages do
-      let packSetup = packSetup config
-      NuGet (fun p -> { (packSetup >> settingsFunc config) p with Publish = false }) (sprintf "nuget/%s" nuspecFile)
+    for package in config.AllNugetPackages do
+      let packSetup = packSetup package.Version config
+      NuGet (fun p -> { (packSetup >> package.ConfigFun) p with Publish = false }) (Path.Combine(config.NugetDir, package.FileName))
 )
 
 MyTarget "NuGetPush" (fun _ ->
-    for (_, settingsFunc) in config.NugetPackages do
-      let packSetup = packSetup config
-      let parameters = NuGetDefaults() |> (fun p -> { packSetup p with Publish = true }) |> settingsFunc config
-      // This allows us to specify packages which we do not want to push...
-      if hasBuildParam "nugetkey" && parameters.Publish then publish parameters
+    let packagePushed =
+      config.AllNugetPackages 
+      |> List.map (fun package ->
+        try
+          let packSetup = packSetup package.Version config
+          let parameters = NuGetDefaults() |> (fun p -> { packSetup p with Publish = true }) |> package.ConfigFun
+          // This allows us to specify packages which we do not want to push...
+          if hasBuildParam "nugetkey" && parameters.Publish then publish parameters
+          else true
+        with e -> 
+          trace (sprintf "Could not push package '%s': %O" (if isNull package.Name then "{null}" else package.Name) e)
+          false)
+      |> List.exists id
+
+    if not packagePushed then
+      failwithf "No package could be pushed!"
 )
 
 // Documentation 
@@ -425,7 +444,7 @@ MyTarget "ReleaseGithubDoc" (fun isSingle ->
         fullclean "gh-pages"
         CopyRecursive ("release"@@"documentation"@@(sprintf "%s.github.io" config.GithubUser)@@"html") "gh-pages" true |> printfn "%A"
         StageAll "gh-pages"
-        Commit "gh-pages" (sprintf "Update generated documentation %s" config.Version)
+        Commit "gh-pages" (sprintf "Update generated documentation %s" config.VersionInfoLine)
         let msg = sprintf "gh-pages branch updated in the gh-pages directory, push that branch to %s now? (y,n): " repro
         let line = readLine msg "y"
         if line = "y" then
@@ -474,7 +493,7 @@ MyTarget "VersionBump" (fun _ ->
         let line = readLine "version bump commit? (y,n): " "y"
         if line = "y" then
             StageAll workingDir
-            Commit workingDir (sprintf "Bump version to %s" config.Version)
+            Commit workingDir (sprintf "Bump version to %s" config.VersionInfoLine)
 
     if doBranchUpdates then
       try Branches.deleteBranch workingDir true "master"
@@ -489,7 +508,24 @@ MyTarget "VersionBump" (fun _ ->
         
       //try Branches.deleteTag "" config.Version
       //with e -> trace (sprintf "deletion of tag %s failed %O" config.Version e)
-      Branches.tag workingDir config.Version
+      
+      let specialVersionedPackages =
+        config.SpecialVersionPackages
+        |> List.filter (fun p -> not (isNull p.TagPrefix))
+      let createdPackageTags =
+        specialVersionedPackages 
+          |> List.map (fun p ->
+            try Branches.tag workingDir p.TagName; true
+            with e ->  trace (sprintf "creation of tag '%s' failed: %O" p.TagName e); false)
+          |> List.exists id
+      
+      try Branches.tag workingDir config.Version
+      with e ->
+        if createdPackageTags then
+          trace (sprintf "creation of tag '%s' failed: %O" config.Version e)
+        else
+          raise <| new Exception("No tag was created for this release, please increase a (package) version!", e)
+      
       try Branches.deleteBranch workingDir true "develop"
       with e -> trace (sprintf "deletion of develop branch failed %O" e)
       Branches.checkout workingDir false "origin/develop"
@@ -500,6 +536,8 @@ MyTarget "VersionBump" (fun _ ->
         trace (sprintf "Try 'git checkout master && git pull origin master && git checkout develop && git pull origin master && git merge master && git push origin develop' locally and repeat the release process!")
         reraise()
 
+      for p in specialVersionedPackages do
+        Branches.pushTag workingDir "origin" p.TagName
       Branches.pushTag workingDir "origin" config.Version
       Branches.pushBranch workingDir "origin" "develop"
       Branches.pushBranch workingDir "origin" "master"

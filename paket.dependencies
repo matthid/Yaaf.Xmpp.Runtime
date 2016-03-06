@@ -9,6 +9,7 @@ nuget NUnit.Runners
 nuget FSharp.Core
 nuget Yaaf.FSharp.Helper
 nuget Yaaf.Sasl
+nuget Yaaf.Xmpp.Data
 nuget Yaaf.DependencyInjection
 nuget Yaaf.DependencyInjection.SimpleInjector
 
