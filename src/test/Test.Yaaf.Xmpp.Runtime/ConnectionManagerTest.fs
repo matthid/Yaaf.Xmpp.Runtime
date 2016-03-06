@@ -75,7 +75,8 @@ type ``Test-Yaaf-Xmpp-Server-ConnetionManager: Check that the ConnectionManager 
       
       mgr.RegisterIncommingConnection(acceptComponent)
       waitRefresh()
-      test <@ mgr.FilterConnections(IsComponent) |> Seq.toList = [ acceptComponent; outgoingComponent ] @>
+      // No order is defined.
+      test <@ mgr.FilterConnections(IsComponent) |> Seq.sortBy hash |> Seq.toList = List.sortBy hash [ acceptComponent; outgoingComponent ] @>
       
       cancel.SetResult None
       waitRefresh()
