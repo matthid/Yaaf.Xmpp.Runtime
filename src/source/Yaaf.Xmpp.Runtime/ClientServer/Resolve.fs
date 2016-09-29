@@ -62,11 +62,21 @@ let tryConnectEP (hostname : string, ep : System.Net.IPEndPoint) =
             return None
     }
 
+let connectResolutions = 
+    AsyncSeq.chooseAsync tryConnectEP
+    >> AsyncSeq.map Some
+    >> AsyncSeq.firstOrDefault None 
+
 let resolveComplete client hostname = 
     let resolve = 
         if client then resolveHostnameClient
         else resolveHostnameServer
-    resolve hostname
-    |> AsyncSeq.chooseAsync tryConnectEP
-    |> AsyncSeq.map (fun s -> Some s)
-    |> AsyncSeq.firstOrDefault None
+    resolve hostname |> connectResolutions
+
+let resolveWithPort client hostname port = 
+    let resolve = 
+        if client then resolveHostname "xmpp-client" port
+        else resolveHostname "xmpp-server" port
+    resolve hostname |> connectResolutions
+    
+

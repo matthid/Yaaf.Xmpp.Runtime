@@ -277,6 +277,7 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
     member x.LocalJid 
         with get () = neg.LocalJid
     
+
     interface IXmppClient with
         member x.IsFaulted = x.IsFaulted
         member x.IsCompleted = x.IsCompleted
@@ -336,5 +337,23 @@ type XmppClient internal (*internal for unit tests!*) (runtime : XmppRuntime, ta
                 return failwith "could not resolve hostname or could not connect to resolved address"
         }
         |> Log.TraceMe
+
     static member Connect(connectInfo) = 
         XmppClient.Connect(connectInfo, XmppSetup.CreateSetup() |> XmppSetup.addCoreClient)
+
+    static member Connect(connectInfo, port, setup) = 
+        async {
+            let! res = Resolve.resolveWithPort true connectInfo.LocalJid.Domainpart port
+            match res with
+            | Some(hostname, client, stream) -> 
+                let data = 
+                    { RemoteHostname = hostname
+                      Stream = new IOStreamManager(stream :> System.IO.Stream)
+                      RemoteJid = Some connectInfo.LocalJid.Domain
+                      IsInitializing = true }
+                let xmppClient = XmppClient.Connect(connectInfo, data, setup)
+                xmppClient.Exited.ContinueWith(fun (t:Task<exn option>) -> client.Close()) |> ignore
+                return xmppClient
+            | None -> 
+                return failwith "could not resolve hostname or could not connect to resolved address"
+        } |> Log.TraceMe
